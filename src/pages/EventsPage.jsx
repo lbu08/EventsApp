@@ -15,26 +15,25 @@ import {
   // ModalFooter,
   // ModalCloseButton,
   Stack,
-  Select,
   Tag,
   Text,
-  Input,
   Button,
+  //useDisclosure,
 } from "@chakra-ui/react";
-import { useLoaderData, NavLink } from "react-router-dom";
+import { useLoaderData, NavLink, useParams } from "react-router-dom";
 import { useState } from "react";
 //import { SearchEvent } from "../components/SearchEvent";
 //import { ControlledInputForm } from "../components/ControlledInputForm";
 
 //import { CategorySelect } from "../components/SearchFieldByCategory";
-//import { SearchEvent } from "../components/SearchEvent";
-//import { Form } from "../components/FormNewEvent";
-//import { ToastContainer, toast } from "react-toastify";
+import { SearchEvent } from "../components/SearchEvent";
+import { ModalTest } from "../components/ModalTest";
 
 export const loader = async () => {
   const events = await fetch("http://localhost:3000/events");
   const categories = await fetch("http://localhost:3000/categories");
   const users = await fetch("http://localhost:3000/users");
+
   return {
     events: await events.json(),
     categories: await categories.json(),
@@ -44,24 +43,26 @@ export const loader = async () => {
 
 export const EventsPage = () => {
   const { events, categories, users } = useLoaderData();
-  const [searchQuery, setSearchQuery] = useState("");
+
+  //const [searchQuery, setSearchQuery] = useState("");
   //const { eventId, userId, categoryId } = useParams();
   // const [selectedCategory, setSelectedCategory] = useState([]);
   //const [isDeleting, setIsDeleting] = useState(false);
   //const { isOpen, onOpen, onClose } = useDisclosure();
+  //const [loading, setLoading] = useState(true);
 
   const eventCategory = categories.reduce((match, category) => {
     match[category.id] = category.name;
     return match;
   }, {});
 
-  const handleChange = (e) => {
-    // const filteredEvents = events.filter((event) => {
-    //   const titleLowerCase = event.title.toLowerCase();
-    //   const lowerCaseSearchQuery = searchQuery.toLowerCase();
-    //  const categoryLowerCase = category.toLowerCase();
-    //   });
-  };
+  //const handleChange = (e) => {
+  // const filteredEvents = events.filter((event) => {
+  //   const titleLowerCase = event.title.toLowerCase();
+  //   const lowerCaseSearchQuery = searchQuery.toLowerCase();
+  //  const categoryLowerCase = category.toLowerCase();
+  //   });
+  // };
   //  const matchesSearch = titleLowerCase.includes(lowerCaseSearchQuery);
   //|| categoryLowerCase.includes(lowerCaseSearchQuery);
 
@@ -117,46 +118,39 @@ export const EventsPage = () => {
   //  return categoryIds;
   // };
 
+  //if (loading) {
+  //return (
+  // <Box w="100%" textAlign="center" marginTop={10}>
+  //   Loading...
+  //  </Box>
+  // );
+  // }
+
+  const CategoryTitle = (categoryIds) => {
+    return categoryIds;
+  };
+
   return (
     <>
       <Heading textAlign="center" marginTop={4}>
         List of events
       </Heading>
       <Center>
-        <Input
-          alignContent="center"
-          marginTop={6}
-          marginBottom={6}
-          w="25%"
-          placeholder="Search by Title"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <Select w="25%" onChange={handleChange}>
-          {categories.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.name}
-            </option>
-          ))}
-        </Select>
+        <SearchEvent />
+
         <Button
           w="10%"
           backgroundColor="dimgrey"
           color="white"
           //onClick={() => clickFn()}
           alignContent="center"
+          marginLeft={4}
+          marginRight={4}
         >
           Search
         </Button>
-        <Button
-          w="20%"
-          backgroundColor="darkolivegreen"
-          color="white"
-          //onClick={() => clickFn()}
-          margin="1rem"
-        >
-          <NavLink to="/event/new">Add New Event</NavLink>
-        </Button>
+
+        <ModalTest />
       </Center>
 
       <Center margin="0" padding="0" alignContent="center">
@@ -279,8 +273,10 @@ export const EventsPage = () => {
                         >
                           Created by{" "}
                           {
-                            users.find((user) => event.createdBy === user.id)
-                              .name
+                            users.find(
+                              (user) =>
+                                String(user.id) === String(event.createdBy)
+                            ).name
                           }
                         </Text>
                       </Stack>

@@ -1,5 +1,5 @@
-import { Center, Input, Button } from "@chakra-ui/react";
-import { useLoaderData, NavLink } from "react-router-dom";
+import { Center, Input, Select } from "@chakra-ui/react";
+import { useLoaderData } from "react-router-dom";
 import { useState } from "react";
 
 export const loader = async () => {
@@ -15,30 +15,30 @@ export const loader = async () => {
 export const SearchEvent = ({ setResults }) => {
   const { events, categories } = useLoaderData();
   const [searchQuery, setSearchQuery] = useState([]);
-  //const handleChange = (event, category) => {
-  //const matchesCategory =
-  //   selectedCategory.length === 0 ||
-  //   event.categories.some((category) => selectedCategory.includes(category));
-  //  return matchesSearch && matchesCategory;
 
-  // const filteredEvents = event.filter(event) => {
-  //   const titleLowerCase = event.title.toLowerCase();
-  //  const lowerCaseSearchQuery = searchQuery.toLowerCase();
-  //const categoryLowerCase = category.toLowerCase();
+  const handleSearch = (e) => {
+    const searchQuery = e.target.value.toLowerCase();
+    setSearchQuery(searchQuery);
 
-  // const matchesSearch = titleLowerCase.includes(lowerCaseSearchQuery);
-  //|| categoryLowerCase.includes(lowerCaseSearchQuery);
-  //const matched = event.filter(({ event, category }) => {
-  //   return event.title
-  //     .toLowerCase()
-  //.includes(event.target.value.toLowerCase());
-  //  });
+    const filteredEvents = events.filter(({ event }) => {
+      const titleLowerCase = event.title.toLowerCase();
 
-  //  setResults(matchesCategory);
-  // };
-  // setFilteredEvents(filteredEvents);
-  // }, [events, searchQuery, selectedCategory];
-  //}
+      const eventCategories = event.categoryIds
+        .map(
+          (categoryId) => categories.find((cat) => cat.id === categoryId)?.name
+        )
+        .join(" ")
+        .toLowerCase();
+
+      return (
+        titleLowerCase.includes(searchQuery) ||
+        eventCategories.includes(searchQuery)
+      );
+    });
+
+    console.log("filteredEvents:", filteredEvents);
+    setResults(filteredEvents);
+  };
 
   return (
     <>
@@ -47,30 +47,17 @@ export const SearchEvent = ({ setResults }) => {
           alignContent="center"
           marginTop={6}
           marginBottom={6}
-          w="25%"
+          w="70%"
           placeholder="Search by Title"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          //onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={handleSearch}
         />
-
-        <Button
-          w="10%"
-          backgroundColor="dimgrey"
-          color="white"
-          onClick={() => clickFn()}
-          alignContent="center"
-        >
-          <NavLink to="/event/new">Search</NavLink>
-        </Button>
-        <Button
-          w="20%"
-          backgroundColor="darkolivegreen"
-          color="white"
-          onClick={() => clickFn()}
-          margin="1rem"
-        >
-          <NavLink to="/event/new">Add New Event</NavLink>
-        </Button>
+        <Select w="50%" onChange={handleSearch}>
+          {categories.map((category) => (
+            <option key={category.id} value={category.id}></option>
+          ))}
+        </Select>
       </Center>
     </>
   );

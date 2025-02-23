@@ -7,7 +7,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 
-export const MyForm = () => {
+export const FormNewEvent = () => {
   const {
     handleSubmit,
     register,

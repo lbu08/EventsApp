@@ -1,29 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import "../index.css";
+//import "../index.css";
 import {
   Box,
-  Button,
   Center,
   Card,
   CardBody,
   Image,
-  Input,
   Heading,
-  Modal,
-  ModalBody,
-  ModalHeader,
-  ModalFooter,
-  ModalContent,
-  ModalOverlay,
-  ModalCloseButton,
   Stack,
+  Tag,
   Text,
-  FormControl,
-  FormLabel,
-  Textarea,
 } from "@chakra-ui/react";
 //import { useLoaderData } from "react-router-dom";
+import { ModalEdit } from "../components/ModalEdit";
+import { ModalDelete } from "../components/ModalDelete";
 
 //export const loader = async () => {
 // const events = await fetch("http://localhost:3000/events");
@@ -37,14 +28,13 @@ import {
 //};
 
 export const EventPage = () => {
-  const { eventId, userId, categoryId } = useParams();
-
+  const { eventId } = useParams();
   const [event, setEvent] = useState([]);
-  const [user, setUser] = useState([]);
-  const [category, setCategory] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   //const { events, categories, users } = useLoaderData();
-  const [isEditing, setIsEditing] = useState(false);
+  //const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -58,55 +48,57 @@ export const EventPage = () => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const response = await fetch(`http://localhost:3000/users/${userId}`);
+      const response = await fetch(`http://localhost:3000/users`);
       const users = await response.json();
       console.log(users);
-      setUser(users);
+      setUsers(users);
     };
     fetchUsers();
-  }, [userId]);
+  }, []);
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const response = await fetch(
-        `http://localhost:3000/categories/${categoryId}`
-      );
+      const response = await fetch(`http://localhost:3000/categories`);
       const categories = await response.json();
       console.log(categories);
-      setCategory(categories);
+      setCategories(categories);
     };
     fetchCategories();
-  }, [categoryId]);
+  }, []);
 
-  //const eventCategory = category.reduce((match, category) => {
-  // match[category.id] = category.name;
-  // return match;
-  // }, {});
+  const eventCategory = categories.reduce((match, category) => {
+    [category.id] = category.name;
+    return match;
+  }, {});
 
-  const handleEdit = () => {
-    setIsEditing(true);
+  const CategoryTitle = (categoryIds) => {
+    return categoryIds;
   };
 
-  const handleSaveEdit = async (e) => {
-    e.preventDefault();
-    const updatedEventData = {
-      title: e.target.title.value,
-      description: e.target.description.value,
-      categories: e.target.categories.value,
-    };
-    const response = await fetch("http://localhost:3000/events/${eventId}", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedEventData),
-    });
-    if (response.ok) {
-      const updatedEvent = await response.json();
-      setEvent(updatedEvent);
-      setIsEditing(false);
-    } else {
-      console.error("Error updating event:", response.statusText);
-    }
-  };
+  // handleEdit = () => {
+  // setIsEditing(true);
+  //};
+
+  // const handleSaveEdit = async (e) => {
+  // e.preventDefault();
+  // const updatedEventData = {
+  //  title: e.target.title.value,
+  //  description: e.target.description.value,
+  // categories: e.target.categories.value,
+  // };
+  //  const response = await fetch("http://localhost:3000/events/${eventId}", {
+  //   method: "POST",
+  //  headers: { "Content-Type": "application/json" },
+  //  body: JSON.stringify(updatedEventData),
+  // });
+  //if (response.ok) {
+  //  const updatedEvent = await response.json();
+  //  setEvent(updatedEvent);
+  //  setIsEditing(false);
+  //  } else {
+  //console.error("Error updating event:", response.statusText);
+  //  }
+  // };
   return (
     <>
       <Center paddingTop={6}>
@@ -172,7 +164,6 @@ export const EventPage = () => {
                         .replace(/(.*)\D\d+/, "$1")}
                     </b>
                   </Text>
-
                   <Text
                     paddingTop={3}
                     //paddingLeft={3}
@@ -185,82 +176,29 @@ export const EventPage = () => {
                   >
                     {event.description}
                   </Text>
+                  <Text textAlign="left" marginTop={4}>
+                    <b>Category:</b>
+                    <Tag
+                      bg="grey"
+                      color="white"
+                      alignItems="center"
+                      marginLeft={2}
+                    >
+                      {categories.map((category) => (
+                        <div key={category.name} className="category">
+                          <Text>{category.name}</Text>
+                          {event.categoryIds
+                            .map((categoryId) => eventCategory[categoryId])
+                            .join(", ")}{" "}
+                          <Text>{category.name}</Text>
+                        </div>
+                      ))}
+                    </Tag>
+                  </Text>
 
                   <Box textAlign="right">
-                    <Button
-                      w="fit-content"
-                      backgroundColor="orange.400"
-                      color="white"
-                      onClick={handleEdit}
-                      margin="0.5rem"
-                    >
-                      Edit Event
-                    </Button>
-                    {isEditing && (
-                      <Modal
-                        IsOpen={isEditing}
-                        onClose={() => setIsEditing(false)}
-                      >
-                        <ModalOverlay />
-                        <ModalContent borderRadius="md">
-                          <ModalHeader>
-                            <Heading as="h1" color="green.500">
-                              Edit Event
-                            </Heading>
-                          </ModalHeader>
-                          <ModalCloseButton />
-                          <ModalBody>
-                            <form onSubmit={handleSaveEdit}>
-                              <FormControl>
-                                <FormLabel htmlFor="title">Title</FormLabel>
-                                <Input
-                                  id="title"
-                                  name="title"
-                                  defaultValue={event.title}
-                                />
-                              </FormControl>
-                              <FormControl mt={4}>
-                                <FormLabel htmlFor="description">
-                                  Description
-                                </FormLabel>
-                                <Textarea
-                                  id="description"
-                                  name="description"
-                                  defaultValue={event.description}
-                                />
-                              </FormControl>
-                              <FormControl mt={4}>
-                                <FormLabel htmlFor="categories">
-                                  Categories
-                                </FormLabel>
-                                <Textarea
-                                  id="categories"
-                                  name="categories"
-                                  defaultValue={event.categories}
-                                />
-                              </FormControl>
-                            </form>
-                          </ModalBody>
-                          <ModalFooter>
-                            <Button colorScheme="blue" mr={3} type="submit">
-                              Save
-                            </Button>
-                            <Button onClick={() => setIsEditing(false)}>
-                              Cancel
-                            </Button>
-                          </ModalFooter>
-                        </ModalContent>
-                      </Modal>
-                    )}
-                    <Button
-                      w="fit-content"
-                      backgroundColor="red"
-                      color="white"
-                      onClick={handleEdit}
-                      margin="0.5 rem"
-                    >
-                      Delete Event
-                    </Button>
+                    <ModalEdit />
+                    <ModalDelete />
                   </Box>
                 </Box>
               </Stack>
