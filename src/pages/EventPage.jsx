@@ -12,28 +12,16 @@ import {
   Tag,
   Text,
 } from "@chakra-ui/react";
-//import { useLoaderData } from "react-router-dom";
 import { ModalEdit } from "../components/ModalEdit";
 import { ModalDelete } from "../components/ModalDelete";
-
-//export const loader = async () => {
-// const events = await fetch("http://localhost:3000/events");
-//const categories = await fetch("http://localhost:3000/categories");
-// const users = await fetch("http://localhost:3000/users");
-// return {
-//  events: await events.json(),
-//categories: await categories.json(),
-//  users: await users.json(),
-// };
-//};
 
 export const EventPage = () => {
   const { eventId } = useParams();
   const [event, setEvent] = useState([]);
   const [users, setUsers] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [category] = useState([]);
 
-  //const { events, categories, users } = useLoaderData();
   //const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
@@ -48,32 +36,37 @@ export const EventPage = () => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const response = await fetch(`http://localhost:3000/users`);
-      const users = await response.json();
-      console.log(users);
-      setUsers(users);
+      const response = await fetch(
+        `http://localhost:3000/users/${event.createdBy}`
+      );
+      const createdBy = await response.json();
+      console.log("createdBy array:", createdBy);
+      setUsers(createdBy);
     };
     fetchUsers();
-  }, []);
+  }, [event]);
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const response = await fetch(`http://localhost:3000/categories`);
-      const categories = await response.json();
-      console.log(categories);
-      setCategories(categories);
+      const response = await fetch(
+        `http://localhost:3000/categories/${event.categoryIds}`
+      );
+      const categoryIds = await response.json();
+      console.log("categoryIds:", categoryIds);
+      setCategories(categoryIds);
     };
     fetchCategories();
+  }, [event]);
+
+  useEffect(() => {
+    const fetchCategories2 = async () => {
+      const response = await fetch(`http://localhost:3000/categories`);
+      const categories = await response.json();
+      console.log("all categories:", categories);
+      setCategories(categories);
+    };
+    fetchCategories2();
   }, []);
-
-  const eventCategory = categories.reduce((match, category) => {
-    [category.id] = category.name;
-    return match;
-  }, {});
-
-  const CategoryTitle = (categoryIds) => {
-    return categoryIds;
-  };
 
   // handleEdit = () => {
   // setIsEditing(true);
@@ -168,7 +161,7 @@ export const EventPage = () => {
                     paddingTop={3}
                     //paddingLeft={3}
                     textAlign="left"
-                    paddingBottom={36}
+                    paddingBottom={20}
                     //borderRadius="xl"
                     //borderColor="darkseagreen"
                     //borderWidth={1}
@@ -176,6 +169,18 @@ export const EventPage = () => {
                   >
                     {event.description}
                   </Text>
+                  <Stack direction="row" spacing="4px">
+                    <Text
+                      fontSize="s"
+                      textAlign="left"
+                      //fontWeight="1"
+                    >
+                      Created by:
+                    </Text>
+                    <Text>
+                      <b>{users.name}</b>
+                    </Text>
+                  </Stack>
                   <Text textAlign="left" marginTop={4}>
                     <b>Category:</b>
                     <Tag
@@ -184,22 +189,19 @@ export const EventPage = () => {
                       alignItems="center"
                       marginLeft={2}
                     >
-                      {categories.map((category) => (
-                        <div key={category.name} className="category">
-                          <Text>{category.name}</Text>
-                          {event.categoryIds
-                            .map((categoryId) => eventCategory[categoryId])
-                            .join(", ")}{" "}
-                          <Text>{category.name}</Text>
-                        </div>
-                      ))}
+                      {categories.name}
                     </Tag>
                   </Text>
 
-                  <Box textAlign="right">
-                    <ModalEdit />
+                  <Stack direction="row" marginTop={10}>
+                    <ModalEdit
+                      events={event}
+                      categories={categories}
+                      users={users}
+                    />
+
                     <ModalDelete />
-                  </Box>
+                  </Stack>
                 </Box>
               </Stack>
             </CardBody>

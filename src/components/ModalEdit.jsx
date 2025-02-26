@@ -12,9 +12,12 @@ import {
 import { EditEventForm } from "../components/EditEventForm";
 import { useState } from "react";
 
-export const ModalEdit = () => {
+export const ModalEdit = ({ events, categories, users }) => {
+  console.log("events passed onto ModalEdit:", events);
+  console.log("categories passed onto ModalEdit:", categories);
+  console.log("users passed onto ModalEdit:", users);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [categories, setCategories] = useState([]);
+  //const [setCategories] = useState([]);
   const [setEvents] = useState([]);
 
   // useEffect(() => {
@@ -46,7 +49,13 @@ export const ModalEdit = () => {
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <EditEventForm categories={categories} onAddEvent={addEvent} />
+            <EditEventForm
+              //categories={categories}
+              events={events}
+              categories={categories}
+              users={users}
+              onAddEvent={addEvent}
+            />
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={onClose} type="submit">

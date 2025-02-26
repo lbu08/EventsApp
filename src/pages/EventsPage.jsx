@@ -7,22 +7,14 @@ import {
   Image,
   SimpleGrid,
   Flex,
-  // Modal,
-  // ModalOverlay,
-  // ModalContent,
-  // ModalHeader,
-  // ModalBody,
-  // ModalFooter,
-  // ModalCloseButton,
   Stack,
   Tag,
   Text,
   Button,
   //useDisclosure,
 } from "@chakra-ui/react";
-import { useLoaderData, NavLink, useParams } from "react-router-dom";
-import { useState } from "react";
-//import { SearchEvent } from "../components/SearchEvent";
+import { useLoaderData, NavLink } from "react-router-dom";
+//import { useState } from "react";
 //import { ControlledInputForm } from "../components/ControlledInputForm";
 
 //import { CategorySelect } from "../components/SearchFieldByCategory";
@@ -56,37 +48,6 @@ export const EventsPage = () => {
     return match;
   }, {});
 
-  //const handleChange = (e) => {
-  // const filteredEvents = events.filter((event) => {
-  //   const titleLowerCase = event.title.toLowerCase();
-  //   const lowerCaseSearchQuery = searchQuery.toLowerCase();
-  //  const categoryLowerCase = category.toLowerCase();
-  //   });
-  // };
-  //  const matchesSearch = titleLowerCase.includes(lowerCaseSearchQuery);
-  //|| categoryLowerCase.includes(lowerCaseSearchQuery);
-
-  // const matchesCategory =
-  //  selectedCategory.length === 0 ||
-  //  event.categories.some((category) => selectedCategory.includes(category));
-  // return matchesSearch && matchesCategory;
-  //});
-  // setFilteredEvents(filteredEvents);
-  //},
-  // [events, searchQuery, selectedCategory];
-
-  //const selectedEvent = ({ setResults }) => {
-  //    const handleChange = (e) => {
-  //   const matchedEvents = events.filter(({ event }) => {
-  //      return event.title
-  //      .toLowerCase()
-  //      .includes(categoryId, event.target.value.toLowerCase);
-  //       event.categoryIds.some((categoryId) => {
-
-  //    });
-  //    setResults(matchedEvents);
-  //   });
-
   //   const deleteEvent = (event) => {
   //    event.preventDefault();
   //    setIsDeleting(true);
@@ -114,10 +75,6 @@ export const EventsPage = () => {
   //  setEventToDelete(eventId);
   // };
 
-  //const categoryData = (categoryIds) => {
-  //  return categoryIds;
-  // };
-
   //if (loading) {
   //return (
   // <Box w="100%" textAlign="center" marginTop={10}>
@@ -136,7 +93,7 @@ export const EventsPage = () => {
         List of events
       </Heading>
       <Center>
-        <SearchEvent />
+        <SearchEvent events={events} categories={categories} />
 
         <Button
           w="10%"
@@ -150,7 +107,7 @@ export const EventsPage = () => {
           Search
         </Button>
 
-        <ModalTest />
+        <ModalTest categories={categories} />
       </Center>
 
       <Center margin="0" padding="0" alignContent="center">
@@ -259,13 +216,6 @@ export const EventsPage = () => {
                           </Tag>
                         </Text>
 
-                        <Text>
-                          {
-                            events.find((user) => event.createdBy === user.id)
-                              .name
-                          }
-                          <div key={event.id} className="user"></div>
-                        </Text>
                         <Text
                           fontSize="s"
                           textAlign="right"

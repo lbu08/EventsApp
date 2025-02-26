@@ -6,20 +6,22 @@ import {
   Textarea,
   Stack,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AddFile } from "../components/AddFile";
 import { CategoryDropList } from "./CategoryDropList";
 
-export const AddEventForm = () => {
-  const [newEventName, setNewEventName] = useState();
-  const [newEventCategory, setNewEventCategory] = useState();
-  const [newEventDescription, setNewEventDescription] = useState();
+export const AddEventForm = ({ categories }) => {
+  console.log("categories received in AddEventForm:", categories);
+
+  const [newEventName, setNewEventName] = useState("");
+  const [newEventCategory, setNewEventCategory] = useState("");
+  const [newEventDescription, setNewEventDescription] = useState("");
   //const [newEventImage, setNewEventImage] = useState(" ");
-  const [newEventStartDate, setNewEventStartDate] = useState();
-  const [newEventStartTime, setNewEventStartTime] = useState();
-  const [newEventEndDate, setNewEventEndDate] = useState();
-  const [newEventEndTime, setNewEventEndTime] = useState();
-  const [newEventUserName, setNewEventUserName] = useState();
+  const [newEventStartDate, setNewEventStartDate] = useState("");
+  const [newEventStartTime, setNewEventStartTime] = useState("");
+  const [newEventEndDate, setNewEventEndDate] = useState("");
+  const [newEventEndTime, setNewEventEndTime] = useState("");
+  const [newEventUserName, setNewEventUserName] = useState("");
   //const [textarea, setTextarea] = useState(" ");
 
   //const handleChange = (event) => {
@@ -27,6 +29,13 @@ export const AddEventForm = () => {
   //  const value = event.target.value;
   //  setInputs(values => ({...values, [name]: value}))
   //}
+
+  //useEffect(() => {
+  // !setNewEventName.length ?(
+
+  //   <div>Please enter Title</div>
+  //  );
+  // },[]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

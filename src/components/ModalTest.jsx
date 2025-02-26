@@ -12,21 +12,22 @@ import {
 import { AddEventForm } from "../components/AddEventForm";
 import { useEffect, useState } from "react";
 
-export const ModalTest = () => {
+export const ModalTest = ({ categories }) => {
+  console.log("categories passed onto ModalTest:", categories);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [categories, setCategories] = useState([]);
+  const [setCategories] = useState([]);
   const [setEvents] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
 
   //useEffect(() => {
-//const fetchCategories = async () => {
-   //   const response = await fetch(`http://localhost:3000/categories`);
-   //   const categories = await response.json();
-   //   console.log(categories);
-   //   setCategories(categories);
+  //const fetchCategories = async () => {
+  //   const response = await fetch(`http://localhost:3000/categories`);
+  //   const categories = await response.json();
+  //   console.log(categories);
+  //   setCategories(categories);
   //  };
-   // fetchCategories();
- // }, []);
+  // fetchCategories();
+  // }, []);
 
   const addEvent = (newEvent) => {
     setEvents((prevEvents) => [newEvent, ...prevEvents]);

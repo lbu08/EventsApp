@@ -1,20 +1,14 @@
 import { Center, Input, Select } from "@chakra-ui/react";
-import { useLoaderData } from "react-router-dom";
+
 import { useState } from "react";
 
-export const loader = async () => {
-  const events = await fetch("http://localhost:3000/events");
-  const categories = await fetch("http://localhost:3000/categories");
+export const SearchEvent = ({ events, categories, setResults }) => {
+  console.log("events passed to SearchEvent:", events);
+  console.log("categories passed to SearchEvent:", categories);
 
-  return {
-    events: await events.json(),
-    categories: await categories.json(),
-  };
-};
-
-export const SearchEvent = ({ setResults }) => {
-  const { events, categories } = useLoaderData();
   const [searchQuery, setSearchQuery] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState([]);
 
   const handleSearch = (e) => {
     const searchQuery = e.target.value.toLowerCase();
@@ -52,10 +46,21 @@ export const SearchEvent = ({ setResults }) => {
           value={searchQuery}
           //onChange={(e) => setSearchQuery(e.target.value)}
           onChange={handleSearch}
+          type="text"
         />
-        <Select w="50%" onChange={handleSearch}>
+
+        <Select
+          value={selectedCategory}
+          onChange={handleSearch}
+          // onChange={(e) => setSelectedEvent(e.target.value)}
+          className="dropdown"
+          name="dropdown"
+        >
+          <option>Category</option>
           {categories.map((category) => (
-            <option key={category.id} value={category.id}></option>
+            <option key={category.id} value={category.name}>
+              {category.name}
+            </option>
           ))}
         </Select>
       </Center>
