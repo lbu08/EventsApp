@@ -12,23 +12,14 @@ import {
 import { EditEventForm } from "../components/EditEventForm";
 import { useState } from "react";
 
-export const ModalEdit = ({ events, categories, users }) => {
+export const ModalEdit = ({ events, eventId, categories, users }) => {
   console.log("events passed onto ModalEdit:", events);
   console.log("categories passed onto ModalEdit:", categories);
   console.log("users passed onto ModalEdit:", users);
+  console.log("eventId passed onto Modal Edit:", eventId);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  //const [setCategories] = useState([]);
-  const [setEvents] = useState([]);
 
-  // useEffect(() => {
-  // const fetchCategories = async () => {
-  //   const response = await fetch(`http://localhost:3000/categories`);
-  //  const categories = await response.json();
-  //  console.log(categories);
-  //   setCategories(categories);
-  //  };
-  //fetchCategories();c
-  //}, []);
+  const [setEvents] = useState([]);
 
   const addEvent = (newEvent) => {
     setEvents((prevEvents) => [newEvent, ...prevEvents]);
@@ -50,8 +41,8 @@ export const ModalEdit = ({ events, categories, users }) => {
           <ModalCloseButton />
           <ModalBody>
             <EditEventForm
-              //categories={categories}
               events={events}
+              eventId={eventId}
               categories={categories}
               users={users}
               onAddEvent={addEvent}

@@ -20,15 +20,13 @@ export const EventPage = () => {
   const [event, setEvent] = useState([]);
   const [users, setUsers] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [category] = useState([]);
-
-  //const [isEditing, setIsEditing] = useState(false);
+  //const [category] = useState([]);
 
   useEffect(() => {
     const fetchEvents = async () => {
       const response = await fetch(`http://localhost:3000/events/${eventId}`);
       const events = await response.json();
-      console.log(events);
+      console.log("eventId:", events);
       setEvent(events);
     };
     fetchEvents();
@@ -68,30 +66,6 @@ export const EventPage = () => {
     fetchCategories2();
   }, []);
 
-  // handleEdit = () => {
-  // setIsEditing(true);
-  //};
-
-  // const handleSaveEdit = async (e) => {
-  // e.preventDefault();
-  // const updatedEventData = {
-  //  title: e.target.title.value,
-  //  description: e.target.description.value,
-  // categories: e.target.categories.value,
-  // };
-  //  const response = await fetch("http://localhost:3000/events/${eventId}", {
-  //   method: "POST",
-  //  headers: { "Content-Type": "application/json" },
-  //  body: JSON.stringify(updatedEventData),
-  // });
-  //if (response.ok) {
-  //  const updatedEvent = await response.json();
-  //  setEvent(updatedEvent);
-  //  setIsEditing(false);
-  //  } else {
-  //console.error("Error updating event:", response.statusText);
-  //  }
-  // };
   return (
     <>
       <Center paddingTop={6}>
@@ -148,13 +122,21 @@ export const EventPage = () => {
                   <Text paddingBottom={6} fontSize="l" textAlign="left">
                     {" "}
                     <b>
-                      {new Date(event.startTime)
-                        .toLocaleString()
-                        .replace(/(.*)\D\d+/, "$1")}{" "}
+                      {
+                        new Date(event.startTime)
+                          .toLocaleString()
+                          .replace(/(.*)\D\d+/, "$1")
+                        //.split("T")
+                        //.join("")
+                      }{" "}
                       -{" "}
-                      {new Date(event.endTime)
-                        .toLocaleString()
-                        .replace(/(.*)\D\d+/, "$1")}
+                      {
+                        new Date(event.endTime)
+                          .toLocaleString()
+                          .replace(/(.*)\D\d+/, "$1")
+                        //.split("T")
+                        //.join("")
+                      }
                     </b>
                   </Text>
                   <Text
@@ -196,6 +178,7 @@ export const EventPage = () => {
                   <Stack direction="row" marginTop={10}>
                     <ModalEdit
                       events={event}
+                      eventId={eventId}
                       categories={categories}
                       users={users}
                     />

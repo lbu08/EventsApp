@@ -7,14 +7,14 @@ export const SearchEvent = ({ events, categories, setResults }) => {
   console.log("categories passed to SearchEvent:", categories);
 
   const [searchQuery, setSearchQuery] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState([]);
-  const [selectedEvent, setSelectedEvent] = useState([]);
+  //const [selectedCategory, setSelectedCategory] = useState([]);
+  //const [selectedEvent, setSelectedEvent] = useState([]);
 
   const handleSearch = (e) => {
     const searchQuery = e.target.value.toLowerCase();
     setSearchQuery(searchQuery);
 
-    const filteredEvents = events.filter(({ event }) => {
+    const filteredEvents = events.filter((event) => {
       const titleLowerCase = event.title.toLowerCase();
 
       const eventCategories = event.categoryIds
@@ -50,11 +50,10 @@ export const SearchEvent = ({ events, categories, setResults }) => {
         />
 
         <Select
-          value={selectedCategory}
+          value={searchQuery}
           onChange={handleSearch}
           // onChange={(e) => setSelectedEvent(e.target.value)}
           className="dropdown"
-          name="dropdown"
         >
           <option>Category</option>
           {categories.map((category) => (

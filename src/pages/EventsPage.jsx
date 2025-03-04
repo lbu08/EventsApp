@@ -15,9 +15,6 @@ import {
 } from "@chakra-ui/react";
 import { useLoaderData, NavLink } from "react-router-dom";
 //import { useState } from "react";
-//import { ControlledInputForm } from "../components/ControlledInputForm";
-
-//import { CategorySelect } from "../components/SearchFieldByCategory";
 import { SearchEvent } from "../components/SearchEvent";
 import { ModalTest } from "../components/ModalTest";
 
@@ -35,11 +32,13 @@ export const loader = async () => {
 
 export const EventsPage = () => {
   const { events, categories, users } = useLoaderData();
+  //console.log("searchResult value:", searchResults);
+  //const [searchResults, setResults] = useState();
 
   //const [searchQuery, setSearchQuery] = useState("");
-  //const { eventId, userId, categoryId } = useParams();
+
   // const [selectedCategory, setSelectedCategory] = useState([]);
-  //const [isDeleting, setIsDeleting] = useState(false);
+
   //const { isOpen, onOpen, onClose } = useDisclosure();
   //const [loading, setLoading] = useState(true);
 
@@ -47,33 +46,6 @@ export const EventsPage = () => {
     match[category.id] = category.name;
     return match;
   }, {});
-
-  //   const deleteEvent = (event) => {
-  //    event.preventDefault();
-  //    setIsDeleting(true);
-  // };
-
-  //const confirmDelete = async () => {
-  // try {
-  // const response = await fetch("http://localhost:3000/events/${eventId}",
-  //   {
-  //   method: "DELETE",
-  //  });
-  //  if (response.ok) {
-  //    Toast.success("event deleted succesfully", );
-  //  } else {
-  //   console.error("Error deleting event", response.statusText);
-  //   Toast.error("Error occured while deleting the event");
-  // } finally {
-  //  setIsDeleting(false);
-  // }
-  //};
-
-  //  const removeEvent = (e, event) => {
-  //    e.preventDefault();
-  //    setIsDeleting(true);
-  //  setEventToDelete(eventId);
-  // };
 
   //if (loading) {
   //return (
@@ -242,3 +214,14 @@ export const EventsPage = () => {
     </>
   );
 };
+
+// //<div>
+//{!searchResults ? (
+// <>
+//   <SearchEvent setResults={searchResults} />
+//    <div>No events found</div>
+//  </>
+//) : (
+//  <SearchEvent setResults={searchResults} />
+//)}
+//</div>

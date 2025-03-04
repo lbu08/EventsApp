@@ -4,11 +4,12 @@ import {
   SimpleGrid,
   Text,
   Textarea,
+  Select,
   Stack,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import { AddFile } from "../components/AddFile";
-import { CategoryDropList } from "./CategoryDropList";
+//import { AddFile } from "../components/AddFile";
+//import { CategoryDropList } from "./CategoryDropList";
 
 export const AddEventForm = ({ categories }) => {
   console.log("categories received in AddEventForm:", categories);
@@ -16,13 +17,42 @@ export const AddEventForm = ({ categories }) => {
   const [newEventName, setNewEventName] = useState("");
   const [newEventCategory, setNewEventCategory] = useState("");
   const [newEventDescription, setNewEventDescription] = useState("");
-  //const [newEventImage, setNewEventImage] = useState(" ");
+  const [newEventImage, setNewEventImage] = useState(" ");
   const [newEventStartDate, setNewEventStartDate] = useState("");
   const [newEventStartTime, setNewEventStartTime] = useState("");
   const [newEventEndDate, setNewEventEndDate] = useState("");
   const [newEventEndTime, setNewEventEndTime] = useState("");
   const [newEventUserName, setNewEventUserName] = useState("");
-  //const [textarea, setTextarea] = useState(" ");
+  const [event, setEvent] = useState("");
+  const [isEditing, setIsEditing] = useState();
+
+  useEffect(() => {
+    setNewEventName("");
+  }, []);
+
+  useEffect(() => {
+    setNewEventCategory("");
+  }, []);
+
+  useEffect(() => {
+    setNewEventDescription("");
+  }, []);
+
+  useEffect(() => {
+    setNewEventImage("");
+  }, []);
+
+  useEffect(() => {
+    setNewEventStartTime("");
+  }, []);
+
+  useEffect(() => {
+    setNewEventEndTime("");
+  }, []);
+
+  useEffect(() => {
+    setNewEventUserName("");
+  }, []);
 
   //const handleChange = (event) => {
   //   const name = event.target.name;
@@ -30,27 +60,45 @@ export const AddEventForm = ({ categories }) => {
   //  setInputs(values => ({...values, [name]: value}))
   //}
 
-  //useEffect(() => {
-  // !setNewEventName.length ?(
-
-  //   <div>Please enter Title</div>
-  //  );
-  // },[]);
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const form = e.target;
-    const formData = new FormData(form);
+    const updatedEvent = {
+      title: e.target.title.value,
+      description: e.target.description.value,
+      categories: e.target.category.value,
+      image: e.target.image.value,
+      startTime: e.target.startTime.value,
+      endTime: e.target.endTime.value,
+      user: e.target.user.value,
+    };
 
-    fetch("http://localhost:3000/events/new", {
-      method: form.method,
-      body: formData,
+    const response = await fetch(`http://localhost:3000/events/${eventId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedEvent),
     });
-
-    const formJson = Object.fromEntries(formData.entries());
-    console.log(formJson);
+    if (response.ok) {
+      const updatedEventOk = await response.json();
+      setEvent(updatedEventOk);
+      setIsEditing(false);
+    } else {
+      console.error("Error updating event:", response.statusText);
+    }
+    console.log(updatedEvent);
   };
+
+  // const form = e.target;
+  // const formData = new newEvent(form);
+
+  // fetch("http://localhost:3000/events/new", {
+  //   method: form.method,
+  //   body: formData,
+  //});
+
+  //   const formJson = Object.fromEntries(formData.entries());
+  //   console.log(formJson);
+  //  };
 
   return (
     <form method="post" onSubmit={handleSubmit}>
@@ -93,7 +141,20 @@ export const AddEventForm = ({ categories }) => {
             </Box>
             <Box>
               <Text marginBottom={2}>Or choose from existing: </Text>
-              <CategoryDropList />
+
+              <Select
+                //value={searchQuery}
+                onChange={handleSubmit}
+                // onChange={(e) => setSelectedEvent(e.target.value)}
+                className="dropdown"
+              >
+                <option>--Category--</option>
+                {categories.map((category) => (
+                  <option key={category.id} value={category.name}>
+                    {category.name}
+                  </option>
+                ))}
+              </Select>
             </Box>
           </Stack>
         </label>
@@ -111,7 +172,18 @@ export const AddEventForm = ({ categories }) => {
             type="text"
           />
         </label>
-        <AddFile />
+        <Text marginRight={2}>Add Image HTTP adress:</Text>
+        <Input
+          name="newEventImage"
+          value={newEventImage}
+          placeholder="http://"
+          onChange={(e) => setNewEventImage(e.target.value)}
+          alignItems="center"
+          marginTop={2}
+          marginBottom={2}
+          w="100%"
+          type="text"
+        />
         <label>
           <Text marginRight={2}>Start date and time:</Text>
           <Input
