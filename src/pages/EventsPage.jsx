@@ -21,6 +21,7 @@ import { ModalTest } from "../components/ModalTest";
 export const loader = async () => {
   const events = await fetch("http://localhost:3000/events");
   const categories = await fetch("http://localhost:3000/categories");
+
   const users = await fetch("http://localhost:3000/users");
 
   return {
@@ -32,11 +33,14 @@ export const loader = async () => {
 
 export const EventsPage = () => {
   const { events, categories, users } = useLoaderData();
+  console.log("events loaded in EventsPage:", events);
+  console.log("categories loaded in EventsPage:", categories);
+  console.log("users loaded in EventsPage:", users);
   //console.log("searchResult value:", searchResults);
   //const [searchResults, setResults] = useState();
 
   //const [searchQuery, setSearchQuery] = useState("");
-
+  //const { eventId, userId, categoryId } = useParams();
   // const [selectedCategory, setSelectedCategory] = useState([]);
 
   //const { isOpen, onOpen, onClose } = useDisclosure();
@@ -79,7 +83,7 @@ export const EventsPage = () => {
           Search
         </Button>
 
-        <ModalTest categories={categories} />
+        <ModalTest categories={categories} events={events} users={users} />
       </Center>
 
       <Center margin="0" padding="0" alignContent="center">
@@ -87,9 +91,9 @@ export const EventsPage = () => {
           w="90%"
           alignContent="center"
 
-          //alignItems="center"
-          //margin="0"
-          //padding="0"
+        //alignItems="center"
+        //margin="0"
+        //padding="0"
         >
           <SimpleGrid
             columns={{ base: 1, sm: 1, md: 2, xl: 4 }}
@@ -191,7 +195,7 @@ export const EventsPage = () => {
                         <Text
                           fontSize="s"
                           textAlign="right"
-                          //fontWeight="1"
+                        //fontWeight="1"
                         >
                           Created by{" "}
                           {

@@ -183,7 +183,7 @@ export const EventPage = () => {
                       users={users}
                     />
 
-                    <ModalDelete />
+                    <ModalDelete eventId={eventId} />
                   </Stack>
                 </Box>
               </Stack>

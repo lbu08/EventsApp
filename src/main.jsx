@@ -2,9 +2,8 @@ import { ChakraProvider } from "@chakra-ui/react";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { EventPage } from "./pages/EventPage";
-import { ModalTest } from "../src/components/ModalTest";
+import { AddEventForm } from "./components/AddEventForm";
 import { EventsPage, loader as EventsPageLoader } from "./pages/EventsPage";
-//import {  SearchEvent,  loader as SearchEventLoader,} from "../src/components/SearchEvent";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Root } from "./components/Root";
 
@@ -25,9 +24,9 @@ const router = createBrowserRouter([
         // action: addComment,
       },
       {
-        path: "/event/new",
-        element: <ModalTest />,
-        //loader: SearchEventLoader,
+        path: "/event/:new",
+        element: <AddEventForm />,
+        //loader: EventsPageLoader,
         // action: addNewEvent,
       },
     ],

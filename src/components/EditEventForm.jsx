@@ -2,7 +2,13 @@ import { Input, SimpleGrid, Text, Textarea } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 //import { AddFile } from "../components/AddFile";
 
-export const EditEventForm = ({ events, categories, users, eventId }) => {
+export const EditEventForm = ({
+  events,
+  categories,
+  users,
+  eventId,
+  onClose,
+}) => {
   console.log("events passed onto EditEventForm:", events);
   console.log("categpries passed onto EditEventForm:", categories);
   console.log("users passed onto EditEventForm:", users);
@@ -10,13 +16,20 @@ export const EditEventForm = ({ events, categories, users, eventId }) => {
   const [setEvent] = useState([]);
   const [setIsEditing] = useState(false);
 
-  const [editName, setEditName] = useState();
+  const [editName, setEditName] = useState(events.title);
+  console.log("edited name:", editName);
   const [editCategory, setEditCategory] = useState(categories.name);
+  console.log("edited category:", editCategory);
   const [editDescription, setEditDescription] = useState(events.description);
+  console.log("edited description:", editDescription);
   const [editImage, setEditImage] = useState(events.image);
+  console.log("edited image http:", editImage);
   const [editStartTime, setEditStartTime] = useState("");
+  console.log("edited startTime:", editStartTime);
   const [editEndTime, setEditEndTime] = useState("");
+  console.log("edited endTime:", editEndTime);
   const [editUserName, setEditUserName] = useState(users.name);
+  console.log("edited userName:", editUserName);
 
   useEffect(() => {
     setEditName(events?.title || "");
@@ -54,16 +67,17 @@ export const EditEventForm = ({ events, categories, users, eventId }) => {
   //};
 
   const handleSubmit = async (e) => {
+    console.log("handleSubmit event:", e);
     e.preventDefault();
 
     const updatedEvent = {
-      title: e.target.title.value,
-      description: e.target.description.value,
-      categories: e.target.category.value,
-      image: e.target.image.value,
-      startTime: e.target.startTime.value,
-      endTime: e.target.endTime.value,
-      user: e.target.user.value,
+      title: editName,
+      description: editCategory,
+      categories: editCategory,
+      image: editImage,
+      startTime: editStartTime,
+      endTime: editEndTime,
+      user: editUserName,
     };
 
     const response = await fetch(`http://localhost:3000/events/${eventId}`, {
@@ -71,6 +85,7 @@ export const EditEventForm = ({ events, categories, users, eventId }) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedEvent),
     });
+    console.log("response:", response);
     if (response.ok) {
       const updatedEventOk = await response.json();
       setEvent(updatedEventOk);
@@ -78,7 +93,8 @@ export const EditEventForm = ({ events, categories, users, eventId }) => {
     } else {
       console.error("Error updating event:", response.statusText);
     }
-    console.log(updatedEvent);
+    console.log("updated event :", updatedEvent);
+    onClose();
   };
 
   return (
@@ -117,6 +133,7 @@ export const EditEventForm = ({ events, categories, users, eventId }) => {
             type="text"
           />
         </label>
+
         <label>
           Edit description:
           <Textarea

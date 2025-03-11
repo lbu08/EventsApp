@@ -46,10 +46,17 @@ export const ModalEdit = ({ events, eventId, categories, users }) => {
               categories={categories}
               users={users}
               onAddEvent={addEvent}
+              onClose={onClose}
             />
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose} type="submit">
+            <Button
+              colorScheme="blue"
+              mr={3}
+              onClick={() => {
+                document.querySelector("form").requestSubmit();
+              }}
+            >
               Submit form
             </Button>
           </ModalFooter>

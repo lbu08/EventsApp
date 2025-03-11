@@ -11,34 +11,31 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const ModalDelete = () => {
+export const ModalDelete = ({ eventId }) => {
+  console.log("eventId passed onto ModalDelete:", eventId);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [setIsDeleting] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleDelete = () => {
-    //  event.preventDefault();
-    setIsDeleting(true);
-  };
+  const handleDelete = async (e) => {
+    console.log("handleDelete event:", e);
+    e.preventDefault();
+    //setIsDeleting(true);
 
-  const confirmDelete = async () => {
-    try {
-      const response = await fetch("http://localhost:3000/events/${eventId}", {
-        method: "DELETE",
-      });
-      if (response.ok) {
-        navigate("/events");
-        //    Toast.success("event deleted succesfully", );
-      } else {
-        console.error("Error deleting event", response.statusText);
-        //   toast.error("Error occured while deleting the event");
-      }
-    } catch (error) {
-      console.error("Error", error);
-    } finally {
+    const response = await fetch(`http://localhost:3000/events/${eventId}`, {
+      method: "DELETE",
+    });
+    console.log("delete response:", response);
+    if (response.ok) {
       setIsDeleting(false);
+      navigate("/events");
+      //    Toast.success("event deleted succesfully", );
+    } else {
+      console.error("Error deleting event", response.statusText);
+      //   toast.error("Error occured while deleting the event");
     }
+    onClose();
   };
 
   return (
@@ -67,7 +64,7 @@ export const ModalDelete = () => {
             <Button
               colorScheme="red"
               mr={3}
-              onClick={confirmDelete}
+              onClick={handleDelete}
               type="delete"
             >
               Delete Event
