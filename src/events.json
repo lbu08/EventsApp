@@ -74,6 +74,24 @@
       "endTime": "20:00",
       "user": "",
       "id": 5
+    },
+    {
+      "title": "Agility Spring Cup",
+      "description": "",
+      "image": "",
+      "location": "",
+      "startTime": "",
+      "endTime": "",
+      "id": 6
+    },
+    {
+      "title": "Agility Spring Cup",
+      "description": "Agility dogs competition",
+      "image": "https://www.ultimatespetfood.com/wp-content/uploads/the-ultimate-guide-dog-agility-training_Hero-Image.jpg.webp",
+      "location": "River park agility field",
+      "startTime": "10:00",
+      "endTime": "16:00",
+      "id": 7
     }
   ],
   "categories": [

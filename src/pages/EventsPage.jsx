@@ -14,7 +14,7 @@ import {
   //useDisclosure,
 } from "@chakra-ui/react";
 import { useLoaderData, NavLink } from "react-router-dom";
-//import { useState } from "react";
+import { useState } from "react";
 import { SearchEvent } from "../components/SearchEvent";
 import { ModalTest } from "../components/ModalTest";
 
@@ -36,10 +36,10 @@ export const EventsPage = () => {
   console.log("events loaded in EventsPage:", events);
   console.log("categories loaded in EventsPage:", categories);
   console.log("users loaded in EventsPage:", users);
-  //console.log("searchResult value:", searchResults);
-  //const [searchResults, setResults] = useState();
+  const [searchResults, setResults] = useState([]);
+  console.log("searchResult value:", searchResults);
 
-  //const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   //const { eventId, userId, categoryId } = useParams();
   // const [selectedCategory, setSelectedCategory] = useState([]);
 
@@ -69,7 +69,18 @@ export const EventsPage = () => {
         List of events
       </Heading>
       <Center>
-        <SearchEvent events={events} categories={categories} />
+        <SearchEvent events={events} categories={categories} setResults={setResults} />
+
+        <div>
+          {!searchQuery.length ? (
+            <>
+              <SearchEvent setResults={setSearchQuery} />
+              <div>No events found</div>
+            </>
+          ) : (
+            <SearchEvent setResults={setSearchQuery} />
+          )}
+        </div>
 
         <Button
           w="10%"

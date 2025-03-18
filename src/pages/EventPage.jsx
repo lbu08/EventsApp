@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 //import "../index.css";
 import {
   Box,
+
   Center,
   Card,
   CardBody,
@@ -69,8 +70,10 @@ export const EventPage = () => {
   return (
     <>
       <Center paddingTop={6}>
+
         <Box w="100%" justifyItems="center">
           <Card
+
             direction={{ base: "column", sm: "row" }}
             overflow="hidden"
             variant="outline"
@@ -78,6 +81,7 @@ export const EventPage = () => {
             justify="center"
             h="auto"
             w={{ base: "70%", sm: "70%", md: "80%" }}
+
             marginTop={4}
             borderColor="black.600"
             borderRadius="xl"
@@ -91,22 +95,23 @@ export const EventPage = () => {
               padding="0px"
               borderColor="grey"
             >
-              <Stack direction="row" w="100%" h="auto">
-                <Box width="60%">
+
+              <Stack direction="row" w="100%">
+                <Box width="60%" h="auto">
                   <Image
-                    objectFit="cover"
+                    //objectFit="cover"
                     position="relative"
                     left="0px"
                     top="0px"
                     w="100%"
-                    h="25rem"
+                    h="auto"
                     src={event.image}
                     alt={event.title}
                     padding="0px"
                     margin="0px"
                   />
                 </Box>
-                <Box width="40%" paddingLeft={10} paddingRight={10}>
+                <Box w="40%" h="autofit" paddingLeft={10} paddingRight={10}>
                   <Heading
                     style={{ letterSpacing: 2 }}
                     textTransform="uppercase"
@@ -119,7 +124,7 @@ export const EventPage = () => {
                     {event.title}
                   </Heading>
 
-                  <Text paddingBottom={6} fontSize="l" textAlign="left">
+                  <Text paddingBottom={2} fontSize="l" textAlign="left">
                     {" "}
                     <b>
                       {
@@ -143,11 +148,11 @@ export const EventPage = () => {
                     paddingTop={3}
                     //paddingLeft={3}
                     textAlign="left"
-                    paddingBottom={20}
-                    //borderRadius="xl"
-                    //borderColor="darkseagreen"
-                    //borderWidth={1}
-                    //backgroundColor="palegoldenrod"
+                    paddingBottom={2}
+                  //borderRadius="xl"
+                  //borderColor="darkseagreen"
+                  //borderWidth={1}
+                  //backgroundColor="palegoldenrod"
                   >
                     {event.description}
                   </Text>
@@ -155,7 +160,7 @@ export const EventPage = () => {
                     <Text
                       fontSize="s"
                       textAlign="left"
-                      //fontWeight="1"
+                    //fontWeight="1"
                     >
                       Created by:
                     </Text>
@@ -185,11 +190,14 @@ export const EventPage = () => {
 
                     <ModalDelete eventId={eventId} />
                   </Stack>
+
                 </Box>
               </Stack>
+
             </CardBody>
           </Card>
         </Box>
+
       </Center>
     </>
   );

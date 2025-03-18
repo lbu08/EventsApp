@@ -6,7 +6,7 @@ export const SearchEvent = ({ events, categories, setResults }) => {
   console.log("events passed to SearchEvent:", events);
   console.log("categories passed to SearchEvent:", categories);
 
-  const [searchQuery, setSearchQuery] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   //const [selectedCategory, setSelectedCategory] = useState([]);
   //const [selectedEvent, setSelectedEvent] = useState([]);
 
