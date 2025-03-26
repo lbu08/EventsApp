@@ -13,9 +13,10 @@ export const SearchEvent = ({ events, categories, setResults }) => {
   const handleSearch = (e) => {
     const searchQuery = e.target.value.toLowerCase();
     setSearchQuery(searchQuery);
-
+    console.log("searchQuery", searchQuery)
     const filteredEvents = events.filter((event) => {
       const titleLowerCase = event.title.toLowerCase();
+      console.log("Search event:", event)
 
       const eventCategories = event.categoryIds
         .map(

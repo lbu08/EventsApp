@@ -12,14 +12,14 @@ import {
 import { EditEventForm } from "../components/EditEventForm";
 import { useState } from "react";
 
-export const ModalEdit = ({ events, eventId, categories, users }) => {
+export const ModalEdit = ({ events, eventId, categories, users, setEvents }) => {
   console.log("events passed onto ModalEdit:", events);
   console.log("categories passed onto ModalEdit:", categories);
   console.log("users passed onto ModalEdit:", users);
   console.log("eventId passed onto Modal Edit:", eventId);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const [setEvents] = useState([]);
+  //const [setEvents] = useState([]);
 
   const addEvent = (newEvent) => {
     setEvents((prevEvents) => [newEvent, ...prevEvents]);

@@ -39,7 +39,8 @@ export const EventsPage = () => {
   const [searchResults, setResults] = useState([]);
   console.log("searchResult value:", searchResults);
 
-  const [searchQuery, setSearchQuery] = useState("");
+  const [allEvents, setEvents] = useState(events);
+  //const [searchQuery, setSearchQuery] = useState("");
   //const { eventId, userId, categoryId } = useParams();
   // const [selectedCategory, setSelectedCategory] = useState([]);
 
@@ -62,6 +63,11 @@ export const EventsPage = () => {
   const CategoryTitle = (categoryIds) => {
     return categoryIds;
   };
+  console.log("category title:", CategoryTitle);
+
+  let finalEvents = allEvents;
+  if (searchResults.length > 0) finalEvents = searchResults
+
 
   return (
     <>
@@ -69,9 +75,9 @@ export const EventsPage = () => {
         List of events
       </Heading>
       <Center>
-        <SearchEvent events={events} categories={categories} setResults={setResults} />
+        <SearchEvent events={allEvents} categories={categories} setResults={setResults} />
 
-        <div>
+        {/* // <div>
           {!searchQuery.length ? (
             <>
               <SearchEvent setResults={setSearchQuery} />
@@ -80,7 +86,7 @@ export const EventsPage = () => {
           ) : (
             <SearchEvent setResults={setSearchQuery} />
           )}
-        </div>
+       // </div> */}
 
         <Button
           w="10%"
@@ -94,7 +100,7 @@ export const EventsPage = () => {
           Search
         </Button>
 
-        <ModalTest categories={categories} events={events} users={users} />
+        <ModalTest categories={categories} events={allEvents} users={users} setEvents={setEvents} />
       </Center>
 
       <Center margin="0" padding="0" alignContent="center">
@@ -112,7 +118,7 @@ export const EventsPage = () => {
             spacing={20}
             alignContent="center"
           >
-            {events.map((event) => (
+            {finalEvents.map((event) => (
               <div key={event.id} className="event">
                 <NavLink to={`/event/${event.id}`}>
                   <Card
@@ -184,23 +190,26 @@ export const EventsPage = () => {
                           marginLeft={2}
                         >
                           {event.title}
+
                         </Heading>
                         <Text paddingTop={3} textAlign="left">
                           {event.description}
                         </Text>
                         <Text textAlign="left" marginTop={4}>
                           <b>Category:</b>
-                          <Tag
-                            bg="grey"
-                            color="white"
-                            alignItems="center"
-                            marginLeft={2}
-                          >
-                            {" "}
-                            {event.categoryIds
-                              .map((categoryId) => eventCategory[categoryId])
-                              .join(", ")}
-                          </Tag>
+                          {event.categoryIds && event.categoryIds.length > 0 && (
+                            <Tag
+                              bg="grey"
+                              color="white"
+                              alignItems="center"
+                              marginLeft={2}
+                            >
+                              {" "}
+                              {event.categoryIds
+                                .map((categoryId) => eventCategory[categoryId])
+                                .join(", ")}
+                            </Tag>
+                          )}
                         </Text>
 
                         <Text
@@ -208,14 +217,23 @@ export const EventsPage = () => {
                           textAlign="right"
                         //fontWeight="1"
                         >
-                          Created by{" "}
-                          {
-                            users.find(
-                              (user) =>
-                                String(user.id) === String(event.createdBy)
-                            ).name
-                          }
+
+                          {/* Created by
+
+                          // {" "}
+
+                          {users.find(
+                            (user) =>
+
+                              String(user.id) === String(event.createdBy)
+                          )
+
+                      //} */}
+
                         </Text>
+
+
+
                       </Stack>
                     </CardBody>
                   </Card>
@@ -230,13 +248,3 @@ export const EventsPage = () => {
   );
 };
 
-// //<div>
-//{!searchResults ? (
-// <>
-//   <SearchEvent setResults={searchResults} />
-//    <div>No events found</div>
-//  </>
-//) : (
-//  <SearchEvent setResults={searchResults} />
-//)}
-//</div>

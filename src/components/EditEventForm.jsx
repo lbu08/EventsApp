@@ -1,4 +1,4 @@
-import { Input, SimpleGrid, Text, Textarea } from "@chakra-ui/react";
+import { Box, Select, Input, SimpleGrid, Text, Textarea } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 //import { AddFile } from "../components/AddFile";
 
@@ -7,7 +7,9 @@ export const EditEventForm = ({
   categories,
   users,
   eventId,
+  onAddEvent,
   onClose,
+
 }) => {
   console.log("events passed onto EditEventForm:", events);
   console.log("categpries passed onto EditEventForm:", categories);
@@ -24,19 +26,22 @@ export const EditEventForm = ({
   console.log("edited description:", editDescription);
   const [editImage, setEditImage] = useState(events.image);
   console.log("edited image http:", editImage);
-  const [editStartTime, setEditStartTime] = useState("");
+  const [editStartTime, setEditStartTime] = useState(events.startTime);
   console.log("edited startTime:", editStartTime);
-  const [editEndTime, setEditEndTime] = useState("");
+  const [editEndTime, setEditEndTime] = useState(events.endTime);
   console.log("edited endTime:", editEndTime);
   const [editUserName, setEditUserName] = useState(users.name);
-  console.log("edited userName:", editUserName);
+  console.log("edited CreatedBy:", editUserName);
+  const [editLocation, setEditLocation] = useState(events.location);
+  console.log("edited location:", editLocation);
+
 
   useEffect(() => {
     setEditName(events?.title || "");
   }, [events]);
 
   useEffect(() => {
-    setEditCategory(categories?.name || "");
+    setEditCategory(categories?.name || 1);
   }, [categories]);
 
   useEffect(() => {
@@ -56,29 +61,30 @@ export const EditEventForm = ({
   }, [events]);
 
   useEffect(() => {
-    setEditUserName(users?.name || "");
-  }, [users]);
+    setEditUserName(users?.name || 1);
+  },);
 
-  //const StartDate = () => {
-  // {
-  //    new Date(events.startTime).toLocaleString().replace(/(.*)\D\d+/);
-  // }
-  //  return StartDate;
-  //};
+  useEffect(() => {
+    setEditLocation(events?.location || "");
+  }, [events]);
 
   const handleSubmit = async (e) => {
-    console.log("handleSubmit event:", e);
+    console.log("handleSubmit Edited event:", e);
     e.preventDefault();
 
+    console.log("edited usersId:", setEditUserName);
+
     const updatedEvent = {
+      createdBy: editUserName,
       title: editName,
-      description: editCategory,
-      categories: editCategory,
+      description: editDescription,
       image: editImage,
+      categoryIds: [editCategory],
+      location: editLocation,
       startTime: editStartTime,
       endTime: editEndTime,
-      user: editUserName,
     };
+    console.log("edited Event:", updatedEvent);
 
     const response = await fetch(`http://localhost:3000/events/${eventId}`, {
       method: "PUT",
@@ -95,6 +101,8 @@ export const EditEventForm = ({
     }
     console.log("updated event :", updatedEvent);
     onClose();
+    onAddEvent();
+
   };
 
   return (
@@ -116,23 +124,26 @@ export const EditEventForm = ({
             marginBottom={2}
             w="80%"
             type="text"
-            //placeholder={events.title}
+          //placeholder={events.title}
           />
         </label>
-        <label>
-          Edit category:
-          <Input
-            name="EventCategory"
-            defaultValue={categories.name}
+        <Box>
+          <Text marginBottom={2}>Edit category: </Text>
+
+          <Select
+            //value={searchQuery}
+            //onChange={handleSubmit}
             onChange={(e) => setEditCategory(e.target.value)}
-            alignItems="center"
-            marginTop={2}
-            marginBottom={2}
-            w="80%"
-            //placeholder={categories.name}
-            type="text"
-          />
-        </label>
+            className="dropdown"
+          >
+            <option>--Category--</option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </Select>
+        </Box>
 
         <label>
           Edit description:
@@ -148,7 +159,7 @@ export const EditEventForm = ({
             type="text"
           />
         </label>
-        <Text marginRight={2}>Add Image HTTP adress:</Text>
+        <Text marginRight={2}>Edit Image:</Text>
         <Input
           name="Image"
           defaultValue={events.image}
@@ -162,48 +173,76 @@ export const EditEventForm = ({
         />
 
         <label>
-          <Text marginRight={2}>Edit Start date and time:</Text>
+          <Text marginRight={2}>Edit Start Date and Time :</Text>
 
           <Input
-            name="EventStartDate"
+            name="EventStartTime"
             defaultValue={events.startTime}
             //placeholder={events.startTime}
             onChange={(e) => setEditStartTime(e.target.value)}
             alignItems="center"
             marginTop={2}
             marginBottom={2}
-            w="80%"
-            type="text"
+            w="35%"
+
+            type="datetime-local"
           />
+
         </label>
         <label>
-          <Text>Edit End time:</Text>
+          <Text>Edit End date and time:</Text>
 
           <Input
-            name="EventEndDate"
+            name="EventEndTime"
             defaultValue={events.endTime}
             onChange={(e) => setEditEndTime(e.target.value)}
             alignItems="center"
             marginBottom={2}
-            w="80%"
-            type="text"
-            //placeholder={events.endTime}
+            w="35%"
+            type="datetime-local"
+
           />
+
         </label>
         <label>
-          Enter your username:
-          <Input
-            name="newEventUserName"
-            defaultValue={users.name}
-            onChange={(e) => setEditUserName(e.target.value)}
+          Edit Location:
+          <Textarea
+            name="editLocation"
+            defaultValue={events.location}
+            onChange={(e) => setEditLocation(e.target.value)}
             alignItems="center"
             marginTop={2}
             marginBottom={2}
             marginLeft={2}
-            w="100%"
+            w="80%"
+            //placeholder="Event location"
             type="text"
           />
         </label>
+        <label>
+
+
+          <Box>
+            <Text marginBottom={2}>Choose your username: </Text>
+
+            <Select
+              //defaultValue={users.name}
+              //onChange={handleSubmit}
+
+              onChange={(e) => setEditUserName(e.target.value)}
+              className="dropdown"
+            >
+              <option>--User--</option>
+              {users.map((user) => (
+                <option key={user.id} value={user.id}>
+                  {user.name}
+                </option>
+              ))}
+            </Select>
+          </Box>
+
+        </label>
+
       </SimpleGrid>
     </form>
   );

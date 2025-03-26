@@ -5,24 +5,26 @@ import {
   Text,
   Textarea,
   Select,
-  Stack,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 //import { AddFile } from "../components/AddFile";
 //import { CategoryDropList } from "./CategoryDropList";
 
 export const AddEventForm = ({
-  categories,
   events,
+  //eventId,
+  categories,
   users,
+  onAddEvent,
   onClose,
 }) => {
   console.log("categories received in AddEventForm:", categories);
   console.log("events received in AddEventForm:", events);
   console.log("users received in AddEventForm:", users);
 
-  const [setEvent] = useState([]);
-  const [setIsEditing] = useState(false);
+
+  const [event, setEvent] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
 
   const [newEventName, setNewEventName] = useState("");
   console.log("new event title:", newEventName);
@@ -33,17 +35,13 @@ export const AddEventForm = ({
   console.log("new event description:", newEventDescription);
   const [newEventImage, setNewEventImage] = useState("");
   console.log("new event Image:", newEventImage);
-  const [newEventStartDate, setNewEventStartDate] = useState("");
-  console.log("new event startDate:", newEventStartDate);
   const [newEventStartTime, setNewEventStartTime] = useState("");
   console.log("new event StartTime:", newEventStartTime);
-  const [newEventEndDate, setNewEventEndDate] = useState("");
-  console.log("new event EndDate:", newEventEndDate);
   const [newEventEndTime, setNewEventEndTime] = useState("");
   console.log("new event EndTime:", newEventEndTime);
   const [newEventLocation, setNewEventLocation] = useState("");
   console.log("new event Location:", newEventLocation);
-  const [newEventUserName, setNewEventUserName] = useState("");
+  const [newEventUserName, setNewEventUserName] = useState(users.name);
   console.log("CreatedBy:", newEventUserName);
 
   useEffect(() => {
@@ -51,7 +49,7 @@ export const AddEventForm = ({
   }, [events]);
 
   useEffect(() => {
-    setNewEventCategory(categories?.name || "");
+    setNewEventCategory(categories?.id || 1);
   }, [categories]);
 
   useEffect(() => {
@@ -71,19 +69,14 @@ export const AddEventForm = ({
   }, [events]);
 
   useEffect(() => {
-    setNewEventUserName(users?.name || "");
+    setNewEventUserName(users?.name || 1);
 
-  }, [users]);
+  },);
 
   useEffect(() => {
     setNewEventLocation(events?.location || "");
   }, [events]);
 
-  //const handleChange = async(event) => {
-  // const name = event.target.name;
-  // const value = event.target.value;
-  //  setInputs(values => ({...values, [name]: value}))
-  //}
   const eventCategory = categories.reduce((match, category) => {
     match[category.name] = category.id;
     return match;
@@ -100,33 +93,19 @@ export const AddEventForm = ({
     console.log("handleSubmit New Event:", e);
     e.preventDefault();
 
-
-    //const newId = () => (
-    //  {state.map((event) => (
-    //    <li key={events.eventId}> 
-    //   {eventId}
-    //  </li>
-    // console.log("New eventId:", eventId)
-    // ))}
-    //);
-
-    //const newUserId = () => (
-    //   {users.map((events.createdBy) => (
-    // return (newUserId)
-    //   )}
-
-
     const addEvent = {
-      // id: eventId,
-      //createdBy: {events.createdBy},
+      createdBy: newEventUserName,
       title: newEventName,
       description: newEventDescription,
       image: newEventImage,
-      // categoryIds: setNewEventCategoryId,
+      categoryIds: [newEventCategory],
       location: newEventLocation,
       startTime: newEventStartTime,
       endTime: newEventEndTime,
+
+
     };
+    console.log("addEvent", addEvent)
 
 
     const response = await fetch(`http://localhost:3000/events`, {
@@ -143,6 +122,7 @@ export const AddEventForm = ({
     }
     console.log("NEW Event:", addEvent);
     onClose();
+    onAddEvent();
   };
 
   return (
@@ -169,39 +149,26 @@ export const AddEventForm = ({
           />
         </label>
         <label>
-          <Stack direction="row" w="100%" h="auto">
-            <Box width="50">
-              <Text>Create New category:</Text>
-              <Input
-                name="newEventCategory"
-                //defaultValue={categoryIds}
-                //onChange={(e) => setNewEventCategoryId(e.target.value)}
-                alignItems="center"
-                marginTop={2}
-                marginBottom={2}
-                w="70%"
-                placeholder="Event Category"
-                type="text"
-              />
-            </Box>
-            <Box>
-              <Text marginBottom={2}>Or choose from existing: </Text>
 
-              <Select
-                //value={searchQuery}
-                onChange={handleSubmit}
-                // onChange={(e) => setSelectedEvent(e.target.value)}
-                className="dropdown"
-              >
-                <option>--Category--</option>
-                {categories.map((category) => (
-                  <option key={category.id} value={category.name}>
-                    {category.name}
-                  </option>
-                ))}
-              </Select>
-            </Box>
-          </Stack>
+
+          <Box>
+            <Text marginBottom={2}>Choose category: </Text>
+
+            <Select
+              //value={searchQuery}
+              //onChange={handleSubmit}
+              onChange={(e) => setNewEventCategory(e.target.value)}
+              className="dropdown"
+            >
+              <option>--Category--</option>
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </Select>
+          </Box>
+
         </label>
         <label>
           Enter description:
@@ -232,52 +199,29 @@ export const AddEventForm = ({
         <label>
           <Text marginRight={2}>Start date and time:</Text>
           <Input
+
             name="newEventStartDate"
             defaultValue={events.startTime}
-            onChange={(e) => setNewEventStartDate(e.target.value)}
+            onChange={(e) => setNewEventStartTime(e.target.value)
+            }
             alignItems="center"
             marginTop={2}
             marginBottom={2}
             w="35%"
-            placeholder="DD-MM-YYYY"
-            type="text"
-          />
-          <Input
-            name="newEventStartTime"
-            defaultValue={events.startTime}
-            onChange={(e) => setNewEventStartTime(e.target.value)}
-            alignItems="center"
-            marginTop={2}
-            marginBottom={2}
-            w="30%"
-            placeholder="HH:mm"
-            type="text"
+            type="datetime-local"
           />
         </label>
         <label>
-          <Text>End time:</Text>
+          <Text>End date and time:</Text>
           <Input
             name="newEventEndDate"
             defaultValue={events.endTime}
-            onChange={(e) => setNewEventEndDate(e.target.value)}
+            onChange={(e) => setNewEventEndTime(e.target.value)}
             alignItems="center"
             marginBottom={2}
             w="35%"
-            placeholder="DD-MM-YYYY"
             input
-            type="text"
-          />
-          <Input
-            name="newEventEndTime"
-            defaultValue={events.endTime}
-            onChange={(e) => setNewEventEndTime(e.target.value)}
-            alignItems="center"
-            marginTop={2}
-            marginBottom={2}
-            w="30%"
-            placeholder="HH:mm"
-            input
-            type="text"
+            type="datetime-local"
           />
         </label>
         <label>
@@ -296,21 +240,28 @@ export const AddEventForm = ({
           />
         </label>
         <label>
-          Enter your username:
-          <Input
-            name="newEventUserName"
-            //key={users.id}
-            onChange={(e) => setNewEventUserId(e.target.value)}
-            alignItems="center"
-            marginTop={2}
-            marginBottom={2}
-            marginLeft={2}
-            w="auto"
-            placeholder="your username"
-            type="text"
-          />
+
+
+          <Box>
+            <Text marginBottom={2}>Choose your username: </Text>
+
+            <Select
+              //defaultValue={users.name}
+              //onChange={handleSubmit}
+              onChange={(e) => setNewEventUserName(e.target.value)}
+              className="dropdown"
+            >
+              <option>--User--</option>
+              {users.map((user) => (
+                <option key={user.id} value={user.id}>
+                  {user.name}
+                </option>
+              ))}
+            </Select>
+          </Box>
 
         </label>
+
       </SimpleGrid>
     </form>
   );

@@ -10,21 +10,21 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { AddEventForm } from "../components/AddEventForm";
-import { useState } from "react";
+//import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-export const ModalTest = ({ categories, events, users }) => {
+export const ModalTest = ({ categories, events, users, setEvents }) => {
   console.log("categories passed onto ModalTest:", categories);
   console.log("events passed onto ModalTest:", events);
   console.log("users passed onto ModalTest:", users);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  //const [setCategories] = useState([]);
-  const [setEvents] = useState([]);
-  //const [isEditing, setIsEditing] = useState(false);
+
   const { reset } = useForm();
+  // handleReset = () => { setState(({ name: '', email: '', })) }
 
   const addEvent = (newEvent) => {
+    newEvent.id = events.length + 1;
     setEvents((prevEvents) => [newEvent, ...prevEvents]);
     onClose();
   };
@@ -65,6 +65,7 @@ export const ModalTest = ({ categories, events, users }) => {
               mr={3}
               type="button"
               onClick={() => reset()}
+
             >
               Reset form
             </Button>

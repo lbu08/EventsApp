@@ -14,9 +14,9 @@ export const Navigation = ({ clickFn }) => {
           alignContent="center"
           margin="1rem"
         >
-          <Link to="/">Events</Link>
+          <Link to="/">All Events</Link>
         </Button>
-        <Button
+        {/* <Button
           w="fit-content"
           backgroundColor="purple.400"
           color="white"
@@ -24,8 +24,8 @@ export const Navigation = ({ clickFn }) => {
           alignContent="center"
           margin="1rem"
         >
-          <Link to="/event/1">Event</Link>
-        </Button>
+          <Link to="/event/1">Event 1</Link>
+        </Button> */}
       </Center>
     </>
   );
