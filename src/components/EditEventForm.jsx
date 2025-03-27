@@ -62,7 +62,7 @@ export const EditEventForm = ({
 
   useEffect(() => {
     setEditUserName(users?.name || 1);
-  },);
+  }, [users]);
 
   useEffect(() => {
     setEditLocation(events?.location || "");

@@ -12,11 +12,12 @@ import { useState, useEffect } from "react";
 
 export const AddEventForm = ({
   events,
-  //eventId,
   categories,
   users,
   onAddEvent,
   onClose,
+  onResetRequested,
+
 }) => {
   console.log("categories received in AddEventForm:", categories);
   console.log("events received in AddEventForm:", events);
@@ -29,7 +30,7 @@ export const AddEventForm = ({
   const [newEventName, setNewEventName] = useState("");
   console.log("new event title:", newEventName);
 
-  const [newEventCategory, setNewEventCategory] = useState("");
+  const [newEventCategory, setNewEventCategory] = useState();
   console.log("new event category:", newEventCategory);
   const [newEventDescription, setNewEventDescription] = useState("");
   console.log("new event description:", newEventDescription);
@@ -49,7 +50,7 @@ export const AddEventForm = ({
   }, [events]);
 
   useEffect(() => {
-    setNewEventCategory(categories?.id || 1);
+    setNewEventCategory(categories?.id || "");
   }, [categories]);
 
   useEffect(() => {
@@ -70,8 +71,7 @@ export const AddEventForm = ({
 
   useEffect(() => {
     setNewEventUserName(users?.name || 1);
-
-  },);
+  }, [users]);
 
   useEffect(() => {
     setNewEventLocation(events?.location || "");
@@ -125,6 +125,23 @@ export const AddEventForm = ({
     onAddEvent();
   };
 
+  const handleReset = () => {
+    setNewEventName("");
+    setNewEventCategory("");
+    setNewEventDescription("");
+    setNewEventImage("");
+    setNewEventStartTime("");
+    setNewEventEndTime("");
+    setNewEventLocation("");
+    setNewEventUserName("");
+  };
+
+  useEffect(() => {
+    if (onResetRequested) {
+      onResetRequested(() => handleReset);
+    }
+  }, [onResetRequested]);
+
   return (
     <form method="post" onSubmit={handleSubmit}>
       <SimpleGrid
@@ -138,7 +155,7 @@ export const AddEventForm = ({
           <Text>Enter event name:</Text>
           <Input
             name="newEventName"
-            value={events.title}
+            value={newEventName}
             onChange={(e) => setNewEventName(e.target.value)}
             alignItems="center"
             marginTop={2}
@@ -157,6 +174,7 @@ export const AddEventForm = ({
             <Select
               //value={searchQuery}
               //onChange={handleSubmit}
+
               onChange={(e) => setNewEventCategory(e.target.value)}
               className="dropdown"
             >
@@ -174,7 +192,7 @@ export const AddEventForm = ({
           Enter description:
           <Textarea
             name="newEventDescription"
-            defaultValue={events.description}
+            value={newEventDescription}
             onChange={(e) => setNewEventDescription(e.target.value)}
             alignItems="center"
             marginTop={2}
@@ -187,7 +205,7 @@ export const AddEventForm = ({
         <Text marginRight={2}>Add Image HTTP adress:</Text>
         <Input
           name="newEventImage"
-          defaultValue={events.image}
+          value={newEventImage}
           placeholder="http://"
           onChange={(e) => setNewEventImage(e.target.value)}
           alignItems="center"
@@ -201,7 +219,7 @@ export const AddEventForm = ({
           <Input
 
             name="newEventStartDate"
-            defaultValue={events.startTime}
+            value={newEventStartTime}
             onChange={(e) => setNewEventStartTime(e.target.value)
             }
             alignItems="center"
@@ -214,8 +232,8 @@ export const AddEventForm = ({
         <label>
           <Text>End date and time:</Text>
           <Input
-            name="newEventEndDate"
-            defaultValue={events.endTime}
+            name="newEventEndTime"
+            value={newEventEndTime}
             onChange={(e) => setNewEventEndTime(e.target.value)}
             alignItems="center"
             marginBottom={2}
@@ -228,7 +246,7 @@ export const AddEventForm = ({
           Enter Location:
           <Textarea
             name="newEventLocation"
-            defaultValue={events.location}
+            value={newEventLocation}
             onChange={(e) => setNewEventLocation(e.target.value)}
             alignItems="center"
             marginTop={2}

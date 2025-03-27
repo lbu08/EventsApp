@@ -10,13 +10,15 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { AddEventForm } from "../components/AddEventForm";
-//import { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export const ModalTest = ({ categories, events, users, setEvents }) => {
   console.log("categories passed onto ModalTest:", categories);
   console.log("events passed onto ModalTest:", events);
   console.log("users passed onto ModalTest:", users);
+
+  const [formResetHandler, setFormResetHandler] = useState(null);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -32,10 +34,12 @@ export const ModalTest = ({ categories, events, users, setEvents }) => {
   return (
     <>
       <Button
-        w="20%"
+        // w="20%"
         backgroundColor="darkolivegreen"
         color="white"
         onClick={onOpen}
+        size="md"
+        alignContent="center"
       >
         Add New Event
       </Button>
@@ -54,6 +58,7 @@ export const ModalTest = ({ categories, events, users, setEvents }) => {
               users={users}
               onAddEvent={addEvent}
               onClose={onClose}
+              onResetRequested={setFormResetHandler}
             />
           </ModalBody>
           <ModalFooter>
@@ -64,8 +69,7 @@ export const ModalTest = ({ categories, events, users, setEvents }) => {
               colorScheme="blue"
               mr={3}
               type="button"
-              onClick={() => reset()}
-
+              onClick={() => formResetHandler && formResetHandler()}
             >
               Reset form
             </Button>

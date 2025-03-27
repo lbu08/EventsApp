@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Box,
   Card,
   CardBody,
   Center,
@@ -71,13 +72,18 @@ export const EventsPage = () => {
 
   return (
     <>
-      <Heading textAlign="center" marginTop={4}>
-        List of events
-      </Heading>
-      <Center>
-        <SearchEvent events={allEvents} categories={categories} setResults={setResults} />
+      <Center bgColor="white"
+        flexDir="column"
+        alignItems="center">
+        <Heading fontSize={{ base: 20, sm: 30, md: 45 }} alignItems="center" textAlign="center" marginTop={4}>
+          List of events
+        </Heading>
 
-        {/* // <div>
+        <Stack direction={{ base: "column", md: "row" }} alignItems="center" textAlign="center" gap="0" spacing="4px" >
+          <Box>
+            <SearchEvent events={allEvents} categories={categories} setResults={setResults} />
+          </Box>
+          {/* // <div>
           {!searchQuery.length ? (
             <>
               <SearchEvent setResults={setSearchQuery} />
@@ -88,34 +94,30 @@ export const EventsPage = () => {
           )}
        // </div> */}
 
-        <Button
-          w="10%"
-          backgroundColor="dimgrey"
-          color="white"
-          //onClick={() => clickFn()}
-          alignContent="center"
-          marginLeft={4}
-          marginRight={4}
-        >
-          Search
-        </Button>
+          <Box>
+            <Button
+              w="autofit"
+              backgroundColor="dimgrey"
+              color="white"
+              //onClick={() => clickFn()}
+              alignContent="center"
+              marginLeft={4}
+              marginRight={4}
+              size="md"
+            >
+              Search
+            </Button>
+          </Box>
+          <Box>
 
-        <ModalTest categories={categories} events={allEvents} users={users} setEvents={setEvents} />
-      </Center>
-
-      <Center margin="0" padding="0" alignContent="center">
-        <Flex
-          w="90%"
-          alignContent="center"
-
-        //alignItems="center"
-        //margin="0"
-        //padding="0"
-        >
+            <ModalTest categories={categories} events={allEvents} users={users} setEvents={setEvents} />
+          </Box>
+        </Stack>
+        <Flex>
           <SimpleGrid
             columns={{ base: 1, sm: 1, md: 2, xl: 4 }}
             max-width="1500px"
-            spacing={20}
+            spacing={6}
             alignContent="center"
           >
             {finalEvents.map((event) => (
@@ -192,10 +194,12 @@ export const EventsPage = () => {
                           {event.title}
 
                         </Heading>
-                        <Text paddingTop={3} textAlign="left">
+
+                        <Text paddingTop={3} textAlign="left" paddingLeft={2}>
                           {event.description}
                         </Text>
-                        <Text textAlign="left" marginTop={4}>
+
+                        <Text textAlign="left" marginTop={4} paddingLeft={2}>
                           <b>Category:</b>
                           {event.categoryIds && event.categoryIds.length > 0 && (
                             <Tag
@@ -211,36 +215,24 @@ export const EventsPage = () => {
                             </Tag>
                           )}
                         </Text>
-
                         <Text
                           fontSize="s"
                           textAlign="right"
-                        //fontWeight="1"
                         >
-
                           {/* Created by
-
                           // {" "}
-
                           {users.find(
                             (user) =>
-
                               String(user.id) === String(event.createdBy)
                           )
-
                       //} */}
-
                         </Text>
-
-
-
                       </Stack>
                     </CardBody>
                   </Card>
                 </NavLink>
               </div>
             ))}
-            ;
           </SimpleGrid>
         </Flex>
       </Center>

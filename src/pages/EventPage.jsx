@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 //import "../index.css";
 import {
   Box,
-
   Center,
   Card,
   CardBody,
@@ -100,6 +99,7 @@ export const EventPage = () => {
     return categoryIds;
   };
 
+  console.log(CategoryTitle)
 
   if (!event) return <Heading>Loading..</Heading>
 
@@ -152,19 +152,22 @@ export const EventPage = () => {
 
   return (
     <>
-      <Center paddingTop={6}>
+      <Center
+        bgColor="white"
+        flexDir="column"
+        alignItems="center"
+      //paddingTop={6}
+      >
 
         <Box w="100%" justifyItems="center" >
           <Card
-
             direction={{ base: "column", sm: "row" }}
             overflow="hidden"
             variant="outline"
             padding="0px"
-            justify="center"
+            // justify="center"
             h="auto"
-            w={{ base: "70%", sm: "70%", md: "80%" }}
-
+            w={{ base: "95%", sm: "85%", md: "85%" }}
             marginTop={4}
             borderColor="black.600"
             borderRadius="xl"
@@ -178,12 +181,8 @@ export const EventPage = () => {
               padding="0px"
               borderColor="grey"
             >
-
-              <Stack direction="row" w="100%">
-
-
-                <Box width="60%" h="auto">
-
+              <Stack direction={{ base: "column", md: "row" }} alignItems="center" textAlign="center" gap="0" spacing="4px" >
+                <Box>
                   <Image
                     //objectFit="cover"
                     position="relative"
@@ -197,20 +196,21 @@ export const EventPage = () => {
                     margin="0px"
                   />
                 </Box>
-                <Box w="40%" h="autofit" paddingLeft={10} paddingRight={10}>
+                <Box paddingLeft={{ base: "0%", sm: "0%", lg: "5%", xl: "5%" }}>
                   <Heading
                     style={{ letterSpacing: 2 }}
                     textTransform="uppercase"
                     fontWeight="300"
-                    fontSize="4xl"
+                    // fontSize="4xl"
+                    textAlign={{ base: "center", sm: "center", md: "left" }}
+                    fontSize={{ base: "4xl", sm: "5xl", "lg": "5xl" }}
                     color="darkslategrey"
-                    paddingTop={4}
                     paddingBottom={4}
                   >
                     {event.title}
                   </Heading>
 
-                  <Text paddingBottom={2} fontSize="l" textAlign="left">
+                  <Text paddingBottom={2} textAlign={{ base: "center", sm: "center", md: "left" }} fontSize={{ base: "sm", sm: "sm", lg: "1xl", xl: "2xl" }}>
                     {" "}
                     <b>
                       {
@@ -230,38 +230,28 @@ export const EventPage = () => {
                       }
                     </b>
                   </Text>
-                  <Text
+                  <Text width="100%"
                     paddingTop={3}
-                    //paddingLeft={3}
-                    textAlign="left"
+                    textAlign={{ base: "center", sm: "center", md: "left" }}
                     paddingBottom={2}
-                  //borderRadius="xl"
-                  //borderColor="darkseagreen"
-                  //borderWidth={1}
-                  //backgroundColor="palegoldenrod"
                   >
                     {event.description}
                   </Text>
-                  <Stack direction="row" spacing="4px">
 
-                    <Box key={event.id} className="users">
-                      Created by
+                  <Box key={event.id} className="users">
+                    <Text textAlign={{ base: "center", sm: "center", md: "left" }}>
+                      Created by:
                       {" "}
-
                       {/* {users.find(
                         (user) => String(user.id) === String(event.createdBy)
                       )} */}
-                      <Text>
-                        {/* <b>{eventUser}</b> */}
-                        <b>{eventUser ? eventUser.name : "Loading"}</b>
-                      </Text>
 
+                      {/* <b>{eventUser}</b> */}
+                      <b>{eventUser ? eventUser.name : "Loading"}</b>
+                    </Text>
+                  </Box>
 
-
-                    </Box>
-
-                  </Stack>
-                  <Text textAlign="left" marginTop={4}>
+                  <Text textAlign={{ base: "center", sm: "center", md: "left" }} marginTop={4}>
                     Category:
                     <Tag
                       bg="grey"
@@ -269,47 +259,33 @@ export const EventPage = () => {
                       alignItems="center"
                       marginLeft={2}
                     >
-
                       {" "}
                       {event.categoryIds
                         .map((categoryId) => eventCategory[categoryId])
                         .join(", ")}
                     </Tag>
-                    {/* <Box key={event.id} className="categories">
-                      <b>Category:</b>
-                      <Tag
-                        bg="grey"
-                        color="white"
-                        alignItems="center"
-                        marginLeft={2}
-                      >
-                        {categories.name}
-                      </Tag>
-                    </Box> */}
-
                   </Text>
 
-                  <Stack direction="row" marginTop={10}>
-                    <ModalEdit
-                      events={event}
-                      eventId={eventId}
-                      categories={categories}
-                      users={users}
-                    />
-
-                    <ModalDelete eventId={eventId} />
-                  </Stack>
 
                 </Box>
-
-
               </Stack>
+              <Stack direction={{ base: "column", md: "row" }} marginTop={10}>
+                <ModalEdit
+                  events={event}
+                  eventId={eventId}
+                  categories={categories}
+                  users={users}
+                />
+
+                <ModalDelete eventId={eventId} />
+              </Stack>
+
 
             </CardBody>
           </Card>
         </Box>
 
-      </Center>
+      </Center >
     </>
   );
 };
