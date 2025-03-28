@@ -84,12 +84,25 @@
       "description": "Walking through flowering trees",
       "image": "https://lawnlove.com/blog/wp-content/uploads/2022/03/rsz_flowers-gd17fd6600_1280.jpg",
       "categoryIds": [
-        "3"
+        3
       ],
       "location": "Chinese garden",
       "startTime": "2025-04-07T06:00",
       "endTime": "2025-04-20T21:00",
       "id": 6
+    },
+    {
+      "createdBy": 1,
+      "title": "eventX",
+      "description": "",
+      "image": "",
+      "categoryIds": [
+        3
+      ],
+      "location": "",
+      "startTime": "",
+      "endTime": "",
+      "id": 7
     }
   ],
   "categories": [

@@ -10,30 +10,43 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "@chakra-ui/react";
 
 export const ModalDelete = ({ eventId }) => {
   console.log("eventId passed onto ModalDelete:", eventId);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [setIsDeleting] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const navigate = useNavigate();
 
   const handleDelete = async (e) => {
     console.log("handleDelete event:", e);
     e.preventDefault();
-    //setIsDeleting(true);
+    setIsDeleting(true);
+
+    const toast = useToast();
+    const showToast = () => {
+      toast({
+        title: "Event Deleted Successfully!",
+        description: "This is a simple toast message.",
+        status: "success",
+        duration: 3000, // Display duration in milliseconds
+        isClosable: true, // Allow users to close the toast
+      });
+    };
 
     const response = await fetch(`http://localhost:3000/events/${eventId}`, {
       method: "DELETE",
     });
     console.log("delete response:", response);
     if (response.ok) {
+
       setIsDeleting(false);
-      navigate("/events");
-      //    Toast.success("event deleted succesfully", );
+      navigate("/");
+
     } else {
       console.error("Error deleting event", response.statusText);
-      //   toast.error("Error occured while deleting the event");
+
     }
     onClose();
   };
@@ -64,7 +77,7 @@ export const ModalDelete = ({ eventId }) => {
             <Button
               colorScheme="red"
               mr={3}
-              onClick={handleDelete}
+              onClick={() => { handleDelete(); showToast(); }}
               type="delete"
             >
               Delete Event

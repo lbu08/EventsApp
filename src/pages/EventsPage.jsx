@@ -14,6 +14,7 @@ import {
   Button,
   //useDisclosure,
 } from "@chakra-ui/react";
+
 import { useLoaderData, NavLink } from "react-router-dom";
 import { useState } from "react";
 import { SearchEvent } from "../components/SearchEvent";
@@ -83,16 +84,15 @@ export const EventsPage = () => {
           <Box>
             <SearchEvent events={allEvents} categories={categories} setResults={setResults} />
           </Box>
-          {/* // <div>
+          {/* <div>
           {!searchQuery.length ? (
             <>
-              <SearchEvent setResults={setSearchQuery} />
               <div>No events found</div>
             </>
           ) : (
             <SearchEvent setResults={setSearchQuery} />
           )}
-       // </div> */}
+        </div> */}
 
           <Box>
             <Button

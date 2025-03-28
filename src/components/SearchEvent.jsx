@@ -31,6 +31,17 @@ export const SearchEvent = ({ events, categories, setResults }) => {
       );
     });
 
+               <div>
+              {!searchQuery.length ? (
+                <>
+                  <div>No events found</div>
+                </>
+              ) : (
+                <SearchEvent setResults={setSearchQuery} />
+              )}
+            </div>
+    
+
     console.log("filteredEvents:", filteredEvents);
     setResults(filteredEvents);
   };

@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { EditEventForm } from "../components/EditEventForm";
 import { useState } from "react";
+import { useToast } from "@chakra-ui/react";
 
 export const ModalEdit = ({ events, eventId, categories, users, setEvents }) => {
   console.log("events passed onto ModalEdit:", events);
@@ -25,6 +26,18 @@ export const ModalEdit = ({ events, eventId, categories, users, setEvents }) => 
     setEvents((prevEvents) => [newEvent, ...prevEvents]);
     onClose();
   };
+
+  const toast = useToast();
+  const showToast = () => {
+    toast({
+      title: "New event submitted succesfully!",
+      description: "This is a simple toast message.",
+      status: "success",
+      duration: 3000, // Display duration in milliseconds
+      isClosable: true, // Allow users to close the toast
+    });
+  };
+  console.log("showTOAST", showToast);
 
   return (
     <>
@@ -54,7 +67,7 @@ export const ModalEdit = ({ events, eventId, categories, users, setEvents }) => 
               colorScheme="blue"
               mr={3}
               onClick={() => {
-                document.querySelector("form").requestSubmit();
+                document.querySelector("form").requestSubmit(); showToast();
               }}
             >
               Submit form

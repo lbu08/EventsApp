@@ -15,8 +15,8 @@ export const EditEventForm = ({
   console.log("categpries passed onto EditEventForm:", categories);
   console.log("users passed onto EditEventForm:", users);
 
-  const [setEvent] = useState([]);
-  const [setIsEditing] = useState(false);
+  const [event, setEvent] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
 
   const [editName, setEditName] = useState(events.title);
   console.log("edited name:", editName);
@@ -74,12 +74,15 @@ export const EditEventForm = ({
 
     console.log("edited usersId:", setEditUserName);
 
+    const editCategoryAsNumber = Number(editCategory);
+    const editUserNameAsNumber = Number(editUserName);
+
     const updatedEvent = {
-      createdBy: editUserName,
+      createdBy: editUserNameAsNumber,
       title: editName,
       description: editDescription,
       image: editImage,
-      categoryIds: [editCategory],
+      categoryIds: [editCategoryAsNumber],
       location: editLocation,
       startTime: editStartTime,
       endTime: editEndTime,

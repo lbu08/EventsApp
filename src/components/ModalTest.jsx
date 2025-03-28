@@ -12,6 +12,7 @@ import {
 import { AddEventForm } from "../components/AddEventForm";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useToast } from "@chakra-ui/react";
 
 export const ModalTest = ({ categories, events, users, setEvents }) => {
   console.log("categories passed onto ModalTest:", categories);
@@ -25,10 +26,22 @@ export const ModalTest = ({ categories, events, users, setEvents }) => {
   const { reset } = useForm();
   // handleReset = () => { setState(({ name: '', email: '', })) }
 
+  const toast = useToast();
+  const showToast = () => {
+    toast({
+      title: "New event submitted succesfully!",
+      description: "This is a simple toast message.",
+      status: "success",
+      duration: 3000, // Display duration in milliseconds
+      isClosable: true, // Allow users to close the toast
+    });
+  };
+
   const addEvent = (newEvent) => {
     newEvent.id = events.length + 1;
     setEvents((prevEvents) => [newEvent, ...prevEvents]);
     onClose();
+
   };
 
   return (
@@ -77,7 +90,7 @@ export const ModalTest = ({ categories, events, users, setEvents }) => {
               colorScheme="blue"
               mr={3}
               onClick={() => {
-                document.querySelector("form").requestSubmit();
+                document.querySelector("form").requestSubmit(); showToast();
               }}
             >
               Submit form

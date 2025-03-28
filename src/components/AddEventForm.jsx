@@ -30,7 +30,7 @@ export const AddEventForm = ({
   const [newEventName, setNewEventName] = useState("");
   console.log("new event title:", newEventName);
 
-  const [newEventCategory, setNewEventCategory] = useState();
+  const [newEventCategory, setNewEventCategory] = useState("");
   console.log("new event category:", newEventCategory);
   const [newEventDescription, setNewEventDescription] = useState("");
   console.log("new event description:", newEventDescription);
@@ -50,7 +50,7 @@ export const AddEventForm = ({
   }, [events]);
 
   useEffect(() => {
-    setNewEventCategory(categories?.id || "");
+    setNewEventCategory(categories?.name || "");
   }, [categories]);
 
   useEffect(() => {
@@ -70,7 +70,8 @@ export const AddEventForm = ({
   }, [events]);
 
   useEffect(() => {
-    setNewEventUserName(users?.name || 1);
+    setNewEventUserName(users?.name || 1)
+
   }, [users]);
 
   useEffect(() => {
@@ -93,12 +94,18 @@ export const AddEventForm = ({
     console.log("handleSubmit New Event:", e);
     e.preventDefault();
 
+    // const categoriesAsString = "1";
+    // const categoriesAsNumber = Number(categoriesAsString); // 1
+    // const arrayFromNumber = [categoriesAsNumber];  // [1]
+    const newEventCategoryAsNumber = Number(newEventCategory);
+    const newEventUserNameAsNumber = Number(newEventUserName);
+
     const addEvent = {
-      createdBy: newEventUserName,
+      createdBy: newEventUserNameAsNumber,
       title: newEventName,
       description: newEventDescription,
       image: newEventImage,
-      categoryIds: [newEventCategory],
+      categoryIds: [newEventCategoryAsNumber],
       location: newEventLocation,
       startTime: newEventStartTime,
       endTime: newEventEndTime,
@@ -170,6 +177,8 @@ export const AddEventForm = ({
 
           <Box>
             <Text marginBottom={2}>Choose category: </Text>
+
+
 
             <Select
               //value={searchQuery}

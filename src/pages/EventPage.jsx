@@ -239,6 +239,7 @@ export const EventPage = () => {
                   </Text>
 
                   <Box key={event.id} className="users">
+
                     <Text textAlign={{ base: "center", sm: "center", md: "left" }}>
                       Created by:
                       {" "}
