@@ -1,6 +1,5 @@
 import { Box, Select, Input, SimpleGrid, Text, Textarea } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-//import { AddFile } from "../components/AddFile";
 
 export const EditEventForm = ({
   events,
@@ -127,15 +126,12 @@ export const EditEventForm = ({
             marginBottom={2}
             w="80%"
             type="text"
-          //placeholder={events.title}
           />
         </label>
         <Box>
           <Text marginBottom={2}>Edit category: </Text>
 
           <Select
-            //value={searchQuery}
-            //onChange={handleSubmit}
             onChange={(e) => setEditCategory(e.target.value)}
             className="dropdown"
           >
@@ -158,7 +154,6 @@ export const EditEventForm = ({
             marginTop={2}
             marginBottom={2}
             w="80%"
-            //placeholder={events.description}
             type="text"
           />
         </label>
@@ -166,7 +161,6 @@ export const EditEventForm = ({
         <Input
           name="Image"
           defaultValue={events.image}
-          //placeholder="http://"
           onChange={(e) => setEditImage(e.target.value)}
           alignItems="center"
           marginTop={2}
@@ -181,7 +175,6 @@ export const EditEventForm = ({
           <Input
             name="EventStartTime"
             defaultValue={events.startTime}
-            //placeholder={events.startTime}
             onChange={(e) => setEditStartTime(e.target.value)}
             alignItems="center"
             marginTop={2}
@@ -218,7 +211,6 @@ export const EditEventForm = ({
             marginBottom={2}
             marginLeft={2}
             w="80%"
-            //placeholder="Event location"
             type="text"
           />
         </label>
@@ -229,9 +221,6 @@ export const EditEventForm = ({
             <Text marginBottom={2}>Choose your username: </Text>
 
             <Select
-              //defaultValue={users.name}
-              //onChange={handleSubmit}
-
               onChange={(e) => setEditUserName(e.target.value)}
               className="dropdown"
             >
@@ -243,9 +232,7 @@ export const EditEventForm = ({
               ))}
             </Select>
           </Box>
-
         </label>
-
       </SimpleGrid>
     </form>
   );

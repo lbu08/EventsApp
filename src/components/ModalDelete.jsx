@@ -23,10 +23,9 @@ export const ModalDelete = ({ eventId }) => {
   const showToast = () => {
     toast({
       title: "Event Deleted Successfully!",
-      // description: "This is a simple toast message.",
       status: "success",
-      duration: 3000, // Display duration in milliseconds
-      isClosable: true, // Allow users to close the toast
+      duration: 3000,
+      isClosable: true,
     });
   };
 
@@ -43,13 +42,10 @@ export const ModalDelete = ({ eventId }) => {
     });
     console.log("delete response:", response);
     if (response.ok) {
-
       setIsDeleting(false);
       navigate("/");
-
     } else {
       console.error("Error deleting event", response.statusText);
-
     }
     onClose();
   };

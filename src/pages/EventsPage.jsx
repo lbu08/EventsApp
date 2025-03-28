@@ -42,19 +42,11 @@ export const EventsPage = () => {
   console.log("searchResult value:", searchResults);
 
   const [allEvents, setEvents] = useState(events);
-  //const [searchQuery, setSearchQuery] = useState("");
-  //const { eventId, userId, categoryId } = useParams();
-  // const [selectedCategory, setSelectedCategory] = useState([]);
-
-  //const { isOpen, onOpen, onClose } = useDisclosure();
-  //const [loading, setLoading] = useState(true);
 
   const eventCategory = categories.reduce((match, category) => {
     match[category.id] = category.name;
     return match;
   }, {});
-
-
 
   const CategoryTitle = (categoryIds) => {
     return categoryIds;
@@ -78,22 +70,11 @@ export const EventsPage = () => {
           <Box>
             <SearchEvent events={allEvents} categories={categories} setResults={setResults} />
           </Box>
-          {/* <Box>
-            {!searchQuery.length ? (
-              <>
-                <div>No events found</div>
-              </>
-            ) : (
-              <SearchEvent setResults={setSearchQuery} />
-            )}
-          </Box> */}
-
           <Box>
             <Button
               w="autofit"
               backgroundColor="dimgrey"
               color="white"
-              //onClick={() => clickFn()}
               alignContent="center"
               marginLeft={4}
               marginRight={4}
@@ -208,18 +189,6 @@ export const EventsPage = () => {
                                 .join(", ")}
                             </Tag>
                           )}
-                        </Text>
-                        <Text
-                          fontSize="s"
-                          textAlign="right"
-                        >
-                          {/* Created by
-                          // {" "}
-                          {users.find(
-                            (user) =>
-                              String(user.id) === String(event.createdBy)
-                          )
-                      //} */}
                         </Text>
                       </Stack>
                     </CardBody>

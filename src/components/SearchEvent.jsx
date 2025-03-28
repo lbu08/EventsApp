@@ -41,7 +41,6 @@ export const SearchEvent = ({ events, categories, setResults }) => {
           w="70%"
           placeholder="Search by Title"
           value={searchQuery}
-          //onChange={(e) => setSearchQuery(e.target.value)}
           onChange={handleSearch}
           type="text"
         />
@@ -49,7 +48,6 @@ export const SearchEvent = ({ events, categories, setResults }) => {
         <Select
           value={searchQuery}
           onChange={handleSearch}
-          // onChange={(e) => setSelectedEvent(e.target.value)}
           className="dropdown"
         >
           <option>Category</option>

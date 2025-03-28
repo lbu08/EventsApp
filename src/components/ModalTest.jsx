@@ -24,16 +24,14 @@ export const ModalTest = ({ categories, events, users, setEvents }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { reset } = useForm();
-  // handleReset = () => { setState(({ name: '', email: '', })) }
 
   const toast = useToast();
   const showToast = () => {
     toast({
       title: "New event submitted succesfully!",
-      // description: "This is a simple toast message.",
       status: "success",
-      duration: 3000, // Display duration in milliseconds
-      isClosable: true, // Allow users to close the toast
+      duration: 3000,
+      isClosable: true,
     });
   };
 
@@ -47,7 +45,6 @@ export const ModalTest = ({ categories, events, users, setEvents }) => {
   return (
     <>
       <Button
-        // w="20%"
         backgroundColor="darkolivegreen"
         color="white"
         onClick={onOpen}

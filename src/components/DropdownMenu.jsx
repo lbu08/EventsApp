@@ -1,6 +1,5 @@
 import { Dropdown } from "react-dropdown";
 
-
 export const DropdownMenu = ({ categories }) => {
   console.log("categories passed onto Dropdownmenu:", categories);
   //const defaultItem = categories[0];

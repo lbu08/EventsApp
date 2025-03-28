@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-//import "../index.css";
 import {
   Box,
   Center,
@@ -20,7 +19,6 @@ export const EventPage = () => {
   const [event, setEvent] = useState();
   const [users, setUsers] = useState([]);
   const [categories, setCategories] = useState([]);
-  //const [category] = useState([]);
 
   const [eventUser, setEventUser] = useState();
   console.log("eventUser", eventUser);
@@ -34,16 +32,6 @@ export const EventPage = () => {
     };
     fetchEventId();
   }, [eventId]);
-
-  // useEffect(() => {
-  //   const fetchEvents = async () => {
-  //     const response = await fetch(`http://localhost:3000/events`);
-  //     const events = await response.json();
-  //     console.log("events in EventPage:", events);
-  //     setEvents(events);
-  //   };
-  //   fetchEvents();
-  // }, [event]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -65,15 +53,6 @@ export const EventPage = () => {
     };
     fetchUsers();
   }, []);
-
-  // useEffect(() => {
-  //   if (users && event && event.createdBy) {
-  //     const temporarilyEventUser = users.find(u => u.id === event.createdBy);
-  //     //setEventUser(temporarilyEventUser.name);
-  //     console.log(" Temporarily User1", temporarilyEventUser)
-  //     console.log(" Temporarily User2", temporarilyEventUser.name)
-  //   }
-  // }, [users, event]);
 
   useEffect(() => {
     if (users && event && event.createdBy) {
@@ -103,52 +82,7 @@ export const EventPage = () => {
 
   if (!event) return <Heading w="100%" textAlign="center" marginTop={10}>Loading..</Heading>
 
-  // useEffect(() => {
-  //   // const fetchUsers = async () => {
-  //   //   try {
-  //   //     const response = await fetch(`http://localhost:3000/users/${event.createdBy}`);
-  //   //     const createdBy = await response.json();
-  //   //     console.log("createdBy array:", createdBy);
-  //   //     setUsers(createdBy);
-  //   //   } catch (error) {
-  //   //     console.error("Error fetching users:", error);
-  //   //   }
-  //   // };
-  //   const fetchUser = async () => {
-  //     const response = await fetch(
-  //       `http://localhost:3000/users/${event.createdBy}`
-  //     );
-  //     const createdBy = await response.json();
-  //     console.log("createdBy array:", createdBy);
-  //     setUsers(createdBy);
-  //   };
-  //   fetchUser();
-  // }, [event]);
-
-  // useEffect(() => {
-  //   if (!event.categoryIds) return;
-  //   console.log("event.categoryIds:", event.categoryIds)
-
-  //   const fetchCategories = async () => {
-  //     const fetchUrl = `http:/localhost:3000/categories/${event.categoryIds}`
-  //     console.log("fetchUrl:", fetchUrl)
-  //     const response = await fetch(fetchUrl);
-
-
-  //     const categoryIds = await response.json();
-  //     console.log("categoryIds:", categoryIds);
-  //     setCategories(categoryIds);
-  //   };
-  //   fetchCategories();
-  // }, [event]);
-
-
-  // console.log("EVENT", event)
-  // console.log("IMAGE", event.image)
   console.log("user", users)
-
-  // console.log("eventUserNAME", eventUser.name)
-
 
   return (
     <>
@@ -156,7 +90,6 @@ export const EventPage = () => {
         bgColor="white"
         flexDir="column"
         alignItems="center"
-      //paddingTop={6}
       >
 
         <Box w="100%" justifyItems="center" >
@@ -165,7 +98,6 @@ export const EventPage = () => {
             overflow="hidden"
             variant="outline"
             padding="0px"
-            // justify="center"
             h="auto"
             w={{ base: "80%", sm: "85%", md: "80%" }}
             marginTop={4}
@@ -201,7 +133,6 @@ export const EventPage = () => {
                     style={{ letterSpacing: 2 }}
                     textTransform="uppercase"
                     fontWeight="300"
-                    // fontSize="4xl"
                     textAlign={{ base: "center", sm: "center", md: "left" }}
                     fontSize={{ base: "4xl", sm: "5xl", "lg": "5xl" }}
                     color="darkslategrey"
@@ -217,16 +148,13 @@ export const EventPage = () => {
                         new Date(event.startTime)
                           .toLocaleString()
                           .replace(/(.*)\D\d+/, "$1")
-                        //.split("T")
-                        //.join("")
                       }{" "}
                       -{" "}
                       {
                         new Date(event.endTime)
                           .toLocaleString()
                           .replace(/(.*)\D\d+/, "$1")
-                        //.split("T")
-                        //.join("")
+
                       }
                     </b>
                   </Text>
@@ -243,15 +171,9 @@ export const EventPage = () => {
                     <Text textAlign={{ base: "center", sm: "center", md: "left" }}>
                       Created by:
                       {" "}
-                      {/* {users.find(
-                        (user) => String(user.id) === String(event.createdBy)
-                      )} */}
-
-                      {/* <b>{eventUser}</b> */}
                       <b>{eventUser ? eventUser.name : "Loading"}</b>
                     </Text>
                   </Box>
-
                   <Text textAlign={{ base: "center", sm: "center", md: "left" }} marginTop={4}>
                     Category:
                     <Tag
@@ -266,8 +188,6 @@ export const EventPage = () => {
                         .join(", ")}
                     </Tag>
                   </Text>
-
-
                 </Box>
               </Stack>
               <Stack direction={{ base: "column", md: "row" }} marginTop={10}>
@@ -277,15 +197,11 @@ export const EventPage = () => {
                   categories={categories}
                   users={users}
                 />
-
                 <ModalDelete eventId={eventId} />
               </Stack>
-
-
             </CardBody>
           </Card>
         </Box>
-
       </Center >
     </>
   );

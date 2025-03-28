@@ -7,8 +7,6 @@ import {
   Select,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-//import { AddFile } from "../components/AddFile";
-//import { CategoryDropList } from "./CategoryDropList";
 
 export const AddEventForm = ({
   events,
@@ -94,9 +92,6 @@ export const AddEventForm = ({
     console.log("handleSubmit New Event:", e);
     e.preventDefault();
 
-    // const categoriesAsString = "1";
-    // const categoriesAsNumber = Number(categoriesAsString); // 1
-    // const arrayFromNumber = [categoriesAsNumber];  // [1]
     const newEventCategoryAsNumber = Number(newEventCategory);
     const newEventUserNameAsNumber = Number(newEventUserName);
 
@@ -109,11 +104,8 @@ export const AddEventForm = ({
       location: newEventLocation,
       startTime: newEventStartTime,
       endTime: newEventEndTime,
-
-
     };
     console.log("addEvent", addEvent)
-
 
     const response = await fetch(`http://localhost:3000/events`, {
       method: "POST",
@@ -273,8 +265,6 @@ export const AddEventForm = ({
             <Text marginBottom={2}>Choose your username: </Text>
 
             <Select
-              //defaultValue={users.name}
-              //onChange={handleSubmit}
               onChange={(e) => setNewEventUserName(e.target.value)}
               className="dropdown"
             >

@@ -10,7 +10,6 @@ export const Navigation = () => {
           w="fit-content"
           backgroundColor="purple.400"
           color="white"
-          //onClick={() => clickFn()}
           alignContent="center"
           margin="1rem"
         >
