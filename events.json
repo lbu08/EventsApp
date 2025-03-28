@@ -90,19 +90,6 @@
       "startTime": "2025-04-07T06:00",
       "endTime": "2025-04-20T21:00",
       "id": 6
-    },
-    {
-      "createdBy": 1,
-      "title": "eventX",
-      "description": "",
-      "image": "",
-      "categoryIds": [
-        3
-      ],
-      "location": "",
-      "startTime": "",
-      "endTime": "",
-      "id": 7
     }
   ],
   "categories": [

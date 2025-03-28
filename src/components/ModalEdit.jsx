@@ -10,7 +10,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { EditEventForm } from "../components/EditEventForm";
-import { useState } from "react";
+//import { useState } from "react";
 import { useToast } from "@chakra-ui/react";
 
 export const ModalEdit = ({ events, eventId, categories, users, setEvents }) => {
@@ -31,7 +31,7 @@ export const ModalEdit = ({ events, eventId, categories, users, setEvents }) => 
   const showToast = () => {
     toast({
       title: "New event submitted succesfully!",
-      description: "This is a simple toast message.",
+      // description: "This is a simple toast message.",
       status: "success",
       duration: 3000, // Display duration in milliseconds
       isClosable: true, // Allow users to close the toast

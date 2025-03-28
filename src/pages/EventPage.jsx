@@ -101,7 +101,7 @@ export const EventPage = () => {
 
   console.log(CategoryTitle)
 
-  if (!event) return <Heading>Loading..</Heading>
+  if (!event) return <Heading w="100%" textAlign="center" marginTop={10}>Loading..</Heading>
 
   // useEffect(() => {
   //   // const fetchUsers = async () => {
@@ -167,7 +167,7 @@ export const EventPage = () => {
             padding="0px"
             // justify="center"
             h="auto"
-            w={{ base: "95%", sm: "85%", md: "85%" }}
+            w={{ base: "80%", sm: "85%", md: "80%" }}
             marginTop={4}
             borderColor="black.600"
             borderRadius="xl"

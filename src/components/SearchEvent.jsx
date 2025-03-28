@@ -1,5 +1,4 @@
 import { Center, Input, Select } from "@chakra-ui/react";
-
 import { useState } from "react";
 
 export const SearchEvent = ({ events, categories, setResults }) => {
@@ -7,8 +6,6 @@ export const SearchEvent = ({ events, categories, setResults }) => {
   console.log("categories passed to SearchEvent:", categories);
 
   const [searchQuery, setSearchQuery] = useState("");
-  //const [selectedCategory, setSelectedCategory] = useState([]);
-  //const [selectedEvent, setSelectedEvent] = useState([]);
 
   const handleSearch = (e) => {
     const searchQuery = e.target.value.toLowerCase();
@@ -30,18 +27,6 @@ export const SearchEvent = ({ events, categories, setResults }) => {
         eventCategories.includes(searchQuery)
       );
     });
-
-               <div>
-              {!searchQuery.length ? (
-                <>
-                  <div>No events found</div>
-                </>
-              ) : (
-                <SearchEvent setResults={setSearchQuery} />
-              )}
-            </div>
-    
-
     console.log("filteredEvents:", filteredEvents);
     setResults(filteredEvents);
   };

@@ -19,21 +19,24 @@ export const ModalDelete = ({ eventId }) => {
 
   const navigate = useNavigate();
 
+  const toast = useToast();
+  const showToast = () => {
+    toast({
+      title: "Event Deleted Successfully!",
+      // description: "This is a simple toast message.",
+      status: "success",
+      duration: 3000, // Display duration in milliseconds
+      isClosable: true, // Allow users to close the toast
+    });
+  };
+
   const handleDelete = async (e) => {
     console.log("handleDelete event:", e);
     e.preventDefault();
     setIsDeleting(true);
+    showToast();
 
-    const toast = useToast();
-    const showToast = () => {
-      toast({
-        title: "Event Deleted Successfully!",
-        description: "This is a simple toast message.",
-        status: "success",
-        duration: 3000, // Display duration in milliseconds
-        isClosable: true, // Allow users to close the toast
-      });
-    };
+
 
     const response = await fetch(`http://localhost:3000/events/${eventId}`, {
       method: "DELETE",
@@ -77,7 +80,7 @@ export const ModalDelete = ({ eventId }) => {
             <Button
               colorScheme="red"
               mr={3}
-              onClick={() => { handleDelete(); showToast(); }}
+              onClick={handleDelete}
               type="delete"
             >
               Delete Event

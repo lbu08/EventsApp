@@ -54,13 +54,7 @@ export const EventsPage = () => {
     return match;
   }, {});
 
-  //if (loading) {
-  //return (
-  // <Box w="100%" textAlign="center" marginTop={10}>
-  //   Loading...
-  //  </Box>
-  // );
-  // }
+
 
   const CategoryTitle = (categoryIds) => {
     return categoryIds;
@@ -84,15 +78,15 @@ export const EventsPage = () => {
           <Box>
             <SearchEvent events={allEvents} categories={categories} setResults={setResults} />
           </Box>
-          {/* <div>
-          {!searchQuery.length ? (
-            <>
-              <div>No events found</div>
-            </>
-          ) : (
-            <SearchEvent setResults={setSearchQuery} />
-          )}
-        </div> */}
+          {/* <Box>
+            {!searchQuery.length ? (
+              <>
+                <div>No events found</div>
+              </>
+            ) : (
+              <SearchEvent setResults={setSearchQuery} />
+            )}
+          </Box> */}
 
           <Box>
             <Button

@@ -30,7 +30,7 @@ export const ModalTest = ({ categories, events, users, setEvents }) => {
   const showToast = () => {
     toast({
       title: "New event submitted succesfully!",
-      description: "This is a simple toast message.",
+      // description: "This is a simple toast message.",
       status: "success",
       duration: 3000, // Display duration in milliseconds
       isClosable: true, // Allow users to close the toast
@@ -90,7 +90,7 @@ export const ModalTest = ({ categories, events, users, setEvents }) => {
               colorScheme="blue"
               mr={3}
               onClick={() => {
-                document.querySelector("form").requestSubmit(); showToast();
+                document.querySelector("form").requestSubmit(); showToast(); location.reload();
               }}
             >
               Submit form
