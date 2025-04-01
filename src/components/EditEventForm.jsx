@@ -8,7 +8,8 @@ export const EditEventForm = ({
   eventId,
   onAddEvent,
   onClose,
-
+  temporarilyEvent,
+  setTemporarilyEvent,
 }) => {
   console.log("events passed onto EditEventForm:", events);
   console.log("categpries passed onto EditEventForm:", categories);
@@ -96,14 +97,16 @@ export const EditEventForm = ({
     console.log("response:", response);
     if (response.ok) {
       const updatedEventOk = await response.json();
-      setEvent(updatedEventOk);
+      setTemporarilyEvent(updatedEventOk);
       setIsEditing(false);
+      console.log("updated event :", updatedEvent);
     } else {
       console.error("Error updating event:", response.statusText);
     }
-    console.log("updated event :", updatedEvent);
+    //console.log("updated event :", updatedEvent);
     onClose();
     onAddEvent();
+    // setEvent(updatedEvent);
 
   };
 

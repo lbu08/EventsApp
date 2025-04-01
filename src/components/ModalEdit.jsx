@@ -10,20 +10,26 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { EditEventForm } from "../components/EditEventForm";
-//import { useState } from "react";
+import { useState } from "react";
 import { useToast } from "@chakra-ui/react";
 
-export const ModalEdit = ({ events, eventId, categories, users, setEvents }) => {
+export const ModalEdit = ({ events, eventId, categories, users, setEvent }) => {
   console.log("events passed onto ModalEdit:", events);
   console.log("categories passed onto ModalEdit:", categories);
   console.log("users passed onto ModalEdit:", users);
   console.log("eventId passed onto Modal Edit:", eventId);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  console.log("101", setEvent);
 
-  //const [setEvents] = useState([]);
+  const [temporarilyEvent, setTemporarilyEvent] = useState(events);
+  console.log("temporarilyEvent", temporarilyEvent);
 
-  const addEvent = (newEvent) => {
-    setEvents((prevEvents) => [newEvent, ...prevEvents]);
+
+
+
+  const addEvent = (events) => {
+    console.log("EVENTS", events);
+    setEvent(events);
     onClose();
   };
 
@@ -33,7 +39,7 @@ export const ModalEdit = ({ events, eventId, categories, users, setEvents }) => 
       title: "New event submitted succesfully!",
       status: "success",
       duration: 3000,
-      isClosable: true, 
+      isClosable: true,
     });
   };
   console.log("showTOAST", showToast);
@@ -59,6 +65,9 @@ export const ModalEdit = ({ events, eventId, categories, users, setEvents }) => 
               users={users}
               onAddEvent={addEvent}
               onClose={onClose}
+              //setEvent={setEvent}
+              temporarilyEvent={temporarilyEvent}
+              setTemporarilyEvent={setTemporarilyEvent}
             />
           </ModalBody>
           <ModalFooter>

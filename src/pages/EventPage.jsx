@@ -196,6 +196,7 @@ export const EventPage = () => {
                   eventId={eventId}
                   categories={categories}
                   users={users}
+                  setEvent={setEvent}
                 />
                 <ModalDelete eventId={eventId} />
               </Stack>

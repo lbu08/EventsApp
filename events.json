@@ -26,17 +26,17 @@
       "endTime": "2023-03-10T17:00:00.000Z"
     },
     {
-      "id": 2,
       "createdBy": 1,
       "title": "Laser Tag mania",
-      "description": "Let's play laser tag!",
+      "description": "Let's play laser tag!!!",
       "image": "https://rocketworldusa.com/wp-content/uploads/2019/07/lasertag-1-1080x675.jpg",
       "categoryIds": [
-        2
+        1
       ],
       "location": "Blinded by the Lights Laser Tag, 15 Main St.",
       "startTime": "2023-04-06T18:46",
-      "endTime": "2023-04-06T17:46"
+      "endTime": "2023-04-06T17:46",
+      "id": 2
     },
     {
       "id": 3,
@@ -90,6 +90,19 @@
       "startTime": "2025-04-07T06:00",
       "endTime": "2025-04-20T21:00",
       "id": 6
+    },
+    {
+      "createdBy": 2,
+      "title": "Friday Market",
+      "description": "the biggest market",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Moore_Street_market%2C_Dublin.jpg/1200px-Moore_Street_market%2C_Dublin.jpg",
+      "categoryIds": [
+        3
+      ],
+      "location": "main square",
+      "startTime": "2025-04-21T09:00",
+      "endTime": "2025-04-21T18:00",
+      "id": 7
     }
   ],
   "categories": [
