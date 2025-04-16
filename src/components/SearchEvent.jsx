@@ -29,7 +29,9 @@ export const SearchEvent = ({ events, categories, setResults }) => {
     });
     console.log("filteredEvents:", filteredEvents);
     setResults(filteredEvents);
+
   };
+
 
   return (
     <>

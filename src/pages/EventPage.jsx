@@ -98,6 +98,7 @@ export const EventPage = () => {
             overflow="hidden"
             variant="outline"
             padding="0px"
+            paddingBottom={6}
             h="auto"
             w={{ base: "80%", sm: "85%", md: "80%" }}
             marginTop={4}

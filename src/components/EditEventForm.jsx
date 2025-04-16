@@ -240,3 +240,7 @@ export const EditEventForm = ({
     </form>
   );
 };
+
+
+// location.reload(); // Refresh the page.
+// EditEventForm.jsx on line 110
